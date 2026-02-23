@@ -143,19 +143,76 @@ figure img {
   display: block;
 }
 
-/* REVEAL ANIMATION (APPLE-LIKE) */
+---
+import "../styles/global.css";
 
-.reveal {
+const { title = "s_0 studio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="nav">
+        <a href="/" class="logo">\ s_0 studio</a>
+        <button class="menu-toggle">☰</button>
+        <nav class="nav-links">
+          <a href="/about">About</a>
+          <a href="/work">Work</a>
+          <a href="/services">Services</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="page">
+  <slot />
+</main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.querySelector(".menu-toggle");
+        const nav = document.querySelector(".nav-links");
+        btn?.addEventListener("click", () =>
+          nav.classList.toggle("open")
+        );
+
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) e.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        reveals.forEach(r => observer.observe(r));
+      });
+    </script>
+  </body>
+</html>
+/* Page transition */
+#page {
   opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px);
 }
 
-.reveal.visible {
+#page.page-enter {
   opacity: 1;
   transform: translateY(0);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+;
 }
 
 /* MOBILE */
@@ -239,4 +296,5 @@ a {
 a:hover {
   opacity: 0.6;
 }
+
 
