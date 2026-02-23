@@ -199,3 +199,44 @@ figure img {
     margin: 16px 0;
   }
 }
+/* =========================
+   Motion system (Apple-like)
+   ========================= */
+
+:root {
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Page elements */
+section {
+  margin-bottom: 120px;
+}
+
+/* Headings entrance */
+h1, h2 {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 1s var(--ease-apple) forwards;
+}
+
+h2 {
+  animation-delay: 0.15s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Links */
+a {
+  transition: opacity 0.3s var(--ease-soft);
+}
+
+a:hover {
+  opacity: 0.6;
+}
+
