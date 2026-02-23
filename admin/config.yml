@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: andidumitru96/s0-studi
   branch: main
 
 media_folder: "public/images"
@@ -14,6 +15,8 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Year", name: "year", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "Location", name: "location", widget: "string" }
+      - { label: "Featured (Homepage)", name: "featured", widget: "boolean", required: false }
       - { label: "Images", name: "images", widget: "image", multiple: true }
       - { label: "Description", name: "body", widget: "markdown" }
