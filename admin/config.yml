@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: andidumitru96/s0-studi
+  repo: andidumitru96/solo
   branch: main
+  base_url: https://s0-studio-oauth.<your-account>.workers.dev
+  auth_endpoint: /auth
 
 media_folder: "public/images"
 public_folder: "/images"
@@ -20,3 +22,4 @@ collections:
       - { label: "Featured (Homepage)", name: "featured", widget: "boolean", required: false }
       - { label: "Images", name: "images", widget: "image", multiple: true }
       - { label: "Description", name: "body", widget: "markdown" }
+
