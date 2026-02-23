@@ -2,6 +2,7 @@
 title: "Apt XX"
 year: "2025-2026"
 date: "2024-02-01"
+featured: true
 location: "Bucharest"
 images:
   - /images/05.png
