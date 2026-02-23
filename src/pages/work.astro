@@ -16,7 +16,7 @@ const projects = (await getCollection("projects"))
 <section>
   <div class="project-grid">
     {projects.map(project => (
-      <a href={`/projects/${project.slug}`} class="project-card reveal">
+      <a href=... class="project-card reveal" style={`transition-delay:${index * 80}ms`}>
         <img src={project.data.images[0]} alt={project.data.title} />
         <h3>{project.data.title}</h3>
         <p>{project.data.year}</p>
@@ -34,3 +34,4 @@ const projects = (await getCollection("projects"))
 }
 
 </style>
+
