@@ -1,55 +1,163 @@
 ---
-import "../styles/global.css";
-
-const { title = "s_0 studio" } = Astro.props;
+const { title } = Astro.props;
 ---
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <title>{title}</title>
 
-  <body>
-    <header>
-      <div class="nav">
-        <a href="/" class="logo">s_0 studio</a>
-        <button class="menu-toggle">☰</button>
-        <nav class="nav-links">
-          <a href="/about">About</a>
-          <a href="/work">Work</a>
-          <a href="/services">Services</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </div>
-    </header>
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/styles/global.css" />
 
-    <main>
-      <slot />
-    </main>
+  <!-- Page + reveal logic -->
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      /* Mobile menu */
+      const btn = document.querySelector(".menu-toggle");
+      const nav = document.querySelector(".nav-links");
+      if (btn && nav) {
+        btn.onclick = () => nav.classList.toggle("open");
+      }
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const btn = document.querySelector(".menu-toggle");
-        const nav = document.querySelector(".nav-links");
-        btn?.addEventListener("click", () =>
-          nav.classList.toggle("open")
-        );
+      /* Reveal on scroll */
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
 
-        const reveals = document.querySelectorAll(".reveal");
-        const observer = new IntersectionObserver(
-          entries => {
-            entries.forEach(e => {
-              if (e.isIntersecting) e.target.classList.add("visible");
-            });
-          },
-          { threshold: 0.15 }
-        );
+      reveals.forEach(el => observer.observe(el));
 
-        reveals.forEach(r => observer.observe(r));
-      });
-    </script>
-  </body>
+      /* Page enter animation */
+      const page = document.getElementById("page");
+      if (page) {
+        requestAnimationFrame(() => {
+          page.classList.add("page-enter");
+        });
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <a href="/" class="logo">s_0 studio</a>
+
+      <button class="menu-toggle" aria-label="Menu">
+        ☰
+      </button>
+
+      <nav class="nav-links">
+        <a href="/about">About</a>
+        <a href="/work">Work</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE WRAPPER (important for transitions) -->
+  <main id="page">
+    <slot />
+  </main>
+</body>
 </html>
+
+<style>
+/* =========================
+   Header & Navigation
+   ========================= */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  z-index: 100;
+}
+
+.nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-links a {
+  margin-left: 24px;
+}
+
+/* =========================
+   Mobile Navigation
+   ========================= */
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: white;
+    display: none;
+    flex-direction: column;
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-links a {
+    margin: 12px 0;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
+
+/* =========================
+   Page transition (Apple-like)
+   ========================= */
+
+#page {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+#page.page-enter {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+</style>
