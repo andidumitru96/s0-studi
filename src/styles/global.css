@@ -16,19 +16,20 @@
   box-sizing: border-box;
 }
 
+/* Base typography */
 body {
-  margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: var(--white);
-  color: var(--black);
-  line-height: 1.7;
+  font-family: "Inter", system-ui, sans-serif;
   font-size: var(--body);
+  line-height: 1.7;
+  color: var(--black);
   -webkit-font-smoothing: antialiased;
+  margin: 0;
 }
 
 h1, h2, h3 {
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Inter Tight", "Inter", system-ui, sans-serif;
   letter-spacing: -0.04em;
+  font-weight: 500;
 }
 
 h1 {
@@ -89,3 +90,4 @@ main {
     transform: translateY(0);
   }
 }
+
