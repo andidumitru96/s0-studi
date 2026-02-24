@@ -1,47 +1,33 @@
-/* Fonts and base typography */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap");
-
-body {
-  font-family: "Inter", system-ui, sans-serif !important;
-  font-size: var(--body);
-  line-height: 1.7;
-  color: var(--black);
-}
-
-h1, h2, h3 {
-  font-family: "Inter Tight", "Inter", system-ui, sans-serif !important;
-  font-weight: 500;
-  letter-spacing: -0.04em;
-}
-
-/* Force all link states to black + no underline */
-a,
-a:link,
-a:visited,
-a:hover,
-a:active,
-a:focus {
-  color: var(--black) !important;
+/* Menu links */
+.nav-links a {
   text-decoration: none !important;
-  outline: none !important;
-  cursor: pointer;
+  color: var(--black) !important;
+  font-weight: 500;
   transition: opacity 0.25s ease;
 }
 
-a:hover { opacity: 0.7; }
-
-/* Nav-specific links */
-.nav-links a {
-  color: var(--black) !important;
-  font-weight: 500;
-  text-decoration: none !important;
+.nav-links a:hover {
+  opacity: 0.7;
 }
 
-/* Mobile menu button */
+/* Menu button */
 .menu-toggle {
   font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--black) !important;
+  color: var(--black);
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+              transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
