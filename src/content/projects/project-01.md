@@ -3,6 +3,7 @@ title: "Apartament AC-B"
 year: "2025-2026"
 date: "2026-02-01"
 featured: true
+order: 1
 location: "Bucharest"
 images:
   - /images/01a.png
@@ -22,6 +23,7 @@ images:
 A compact housing prototype exploring repetition, density,
 
 and spatial economy through a restrained architectural language.
+
 
 
 
