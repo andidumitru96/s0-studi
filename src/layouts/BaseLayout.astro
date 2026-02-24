@@ -1,47 +1,55 @@
 ---
-// Import your CSS here to fix the "shit" styling issue we discussed!
-import '../styles/global.css'; 
+import "../styles/global.css";
 
-// This syntax sets "Untitled" as the default if no title is provided
-const { title = "Untitled" } = Astro.props;
+const { title = "s_0 studio" } = Astro.props;
 ---
-<head>
-  <meta charset="utf-8" />
 
-  <!-- Fonts first -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
 
-  <!-- Global styles -->
-  <link rel="stylesheet" href="/styles/global.css" />
+  <body>
+    <header>
+      <div class="nav">
+        <a href="/" class="logo">s_0 studio</a>
+        <button class="menu-toggle">☰</button>
+        <nav class="nav-links">
+          <a href="/about">About</a>
+          <a href="/work">Work</a>
+          <a href="/services">Services</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
 
-  <title>{title} · s_0 studio</title>
-  <meta name="description" content="s_0 studio — Architecture & spatial research practice." />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content="Architecture & spatial research by s_0 studio." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={Astro.site} />
+    <main>
+      <slot />
+    </main>
 
-  <!-- Page + reveal logic -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.querySelector(".menu-toggle");
-      const nav = document.querySelector(".nav-links");
-      if (btn && nav) btn.onclick = () => nav.classList.toggle("open");
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.querySelector(".menu-toggle");
+        const nav = document.querySelector(".nav-links");
+        btn?.addEventListener("click", () =>
+          nav.classList.toggle("open")
+        );
 
-      const reveals = document.querySelectorAll(".reveal");
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      }, { threshold: 0.15 });
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) e.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.15 }
+        );
 
-      reveals.forEach(el => observer.observe(el));
-
-      const page = document.getElementById("page");
-      if (page) requestAnimationFrame(() => page.classList.add("page-enter"));
-    });
-  </script>
-</head>
-
+        reveals.forEach(r => observer.observe(r));
+      });
+    </script>
+  </body>
+</html>
