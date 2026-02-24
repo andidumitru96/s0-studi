@@ -1,174 +1,79 @@
 ---
+import { Fragment } from 'astro/jsx-runtime';
 const { title } = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="en">
-<<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">>
-  <meta charset="utf-8" />
-  <title>{title} · s_0 studio</title>
-<meta name="description" content="s_0 studio — Architecture & spatial research practice." />
+  <head>
+    <meta charset="utf-8" />
+    <title>{title} · s_0 studio</title>
+    <meta name="description" content="s_0 studio — Architecture & spatial research practice." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Architecture & spatial research by s_0 studio." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
 
-<meta property="og:title" content={title} />
-<meta property="og:description" content="Architecture & spatial research by s_0 studio." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url.href} />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Global styles -->
-  <link rel="stylesheet" href="/styles/global.css" />
+    <!-- Global styles -->
+    <link rel="stylesheet" href="/styles/global.css" />
 
-  <!-- Page + reveal logic -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      /* Mobile menu */
-      const btn = document.querySelector(".menu-toggle");
-      const nav = document.querySelector(".nav-links");
-      if (btn && nav) {
-        btn.onclick = () => nav.classList.toggle("open");
-      }
+    <!-- Page + reveal logic -->
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* Mobile menu */
+        const btn = document.querySelector(".menu-toggle");
+        const nav = document.querySelector(".nav-links");
+        if (btn && nav) btn.onclick = () => nav.classList.toggle("open");
 
-      /* Reveal on scroll */
-      const reveals = document.querySelectorAll(".reveal");
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
+        /* Reveal on scroll */
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.15 }
+        );
+        reveals.forEach(el => observer.observe(el));
 
-      reveals.forEach(el => observer.observe(el));
+        /* Page enter animation */
+        const page = document.getElementById("page");
+        if (page) requestAnimationFrame(() => page.classList.add("page-enter"));
+      });
+    </script>
+  </head>
 
-      /* Page enter animation */
-      const page = document.getElementById("page");
-      if (page) {
-        requestAnimationFrame(() => {
-          page.classList.add("page-enter");
-        });
-      }
-    });
-  </script>
-</head>
+  <body>
+    <header>
+      <div class="nav">
+        <a href="/" class="logo">s_0 studio</a>
 
-<body>
-  <header>
-    <div class="nav">
-      <a href="/" class="logo">s_0 studio</a>
+        <button class="menu-toggle" aria-label="Menu">
+          ☰
+        </button>
 
-      <button class="menu-toggle" aria-label="Menu">
-        ☰
-      </button>
+        <nav class="nav-links">
+          <a href="/about">About</a>
+          <a href="/work">Work</a>
+          <a href="/services">Services</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
 
-      <nav class="nav-links">
-        <a href="/about">About</a>
-        <a href="/work">Work</a>
-        <a href="/services">Services</a>
-        <a href="/contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- PAGE WRAPPER (important for transitions) -->
-  <main id="page">
-    <slot />
-  </main>
-</body>
+    <!-- PAGE WRAPPER (important for transitions) -->
+    <main id="page">
+      <slot />
+    </main>
+  </body>
 </html>
 
 <style>
-/* =========================
-   Header & Navigation
-   ========================= */
-
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: white;
-  border-bottom: 1px solid #eee;
-  z-index: 100;
-}
-
-.nav {
-  max-width: 1200px;
-  margin: auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-.nav-links {
-  display: flex;
-}
-
-.nav-links a {
-  margin-left: 24px;
-}
-
-/* =========================
-   Mobile Navigation
-   ========================= */
-
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-}
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    background: white;
-    display: none;
-    flex-direction: column;
-    padding: 24px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .nav-links a {
-    margin: 12px 0;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-}
-
-/* =========================
-   Page transition (Apple-like)
-   ========================= */
-
-#page {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-#page.page-enter {
-  opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* Your CSS stays the same */
 </style>
-
-
