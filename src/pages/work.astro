@@ -3,21 +3,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects"))
-  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
+  .sort((a, b) => Number(b.data.year) - Number(a.data.year));
 ---
 
 <BaseLayout title="Work — s_0 studio">
-  <section>
+  <section class="page-header">
     <h1>Work</h1>
   </section>
 
   <section>
     <div class="project-grid">
-      {projects.map((project, index) => (
+      {projects.map((project) => (
         <a
           href={`/projects/${project.slug}`}
           class="project-card reveal"
-          style={`transition-delay:${index * 80}ms`}
         >
           <img src={project.data.images[0]} alt={project.data.title} />
           <h3>{project.data.title}</h3>
@@ -29,19 +28,23 @@ const projects = (await getCollection("projects"))
 </BaseLayout>
 
 <style>
+.page-header {
+  margin-bottom: 80px;
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
 }
-.project-card {
-  transition-delay: calc(var(--i) * 80ms);
-}
-.project-card:nth-child(1) { --i: 0; }
-.project-card:nth-child(2) { --i: 1; }
-.project-card:nth-child(3) { --i: 2; }
-.project-card:nth-child(4) { --i: 3; }
-.project-card:nth-child(5) { --i: 4; }
-.project-card:nth-child(6) { --i: 5; }
-</style>
 
+.project-card {
+  display: block;
+}
+
+.project-card img {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+}
+</style>
