@@ -227,3 +227,8 @@ figure img {
     margin: 16px 0;
   }
 }
+/* SAFETY NET — never ship without this */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
