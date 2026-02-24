@@ -7,16 +7,17 @@ const projects = (await getCollection("projects"))
 ---
 
 <BaseLayout title="Work — s_0 studio">
-  <section class="page-header">
+  <section>
     <h1>Work</h1>
   </section>
 
   <section>
     <div class="project-grid">
-      {projects.map((project) => (
+      {projects.map((project, index) => (
         <a
           href={`/projects/${project.slug}`}
           class="project-card reveal"
+          style={`transition-delay:${index * 80}ms`}
         >
           <img src={project.data.images[0]} alt={project.data.title} />
           <h3>{project.data.title}</h3>
@@ -28,23 +29,14 @@ const projects = (await getCollection("projects"))
 </BaseLayout>
 
 <style>
-.page-header {
-  margin-bottom: 80px;
-}
-
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
 }
 
-.project-card {
-  display: block;
-}
-
 .project-card img {
   width: 100%;
   display: block;
-  margin-bottom: 12px;
 }
 </style>
