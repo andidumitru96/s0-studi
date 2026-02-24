@@ -2,7 +2,7 @@
 title: "Apartament RC"
 year: "2025"
 date: "2025-02-01"
-featured: true
+featured: false
 location: "Bucharest"
 images:
   - /images/04.png
