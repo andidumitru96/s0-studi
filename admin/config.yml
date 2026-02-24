@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: andidumitru96/s0-studi
+  name: git-gateway
   branch: main
-  base_url: https://s0-studio-oauth.andi-dumitru.workers.dev
-  auth_endpoint: /auth
 
 media_folder: "public/images"
 public_folder: "/images"
@@ -17,10 +14,8 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Year", name: "year", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "Location", name: "location", widget: "string" }
-      - { label: "Featured (Homepage)", name: "featured", widget: "boolean", required: false }
+      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Homepage order", name: "order", widget: "number", required: false }
       - { label: "Images", name: "images", widget: "image", multiple: true }
       - { label: "Description", name: "body", widget: "markdown" }
-
-
