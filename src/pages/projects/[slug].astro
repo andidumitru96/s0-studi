@@ -4,74 +4,34 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-  return projects.map(p => ({
-    params: { slug: p.slug },
-    props: { project: p }
-  }));
+  return projects.map(p => ({ params:{slug:p.slug}, props:{project:p} }));
 }
 
 const { project } = Astro.props;
 ---
+
 <BaseLayout title={`${project.data.title} — s_0 studio`}>
-
-<article class="project">
-
-  <!-- HERO IMAGE -->
-  <div class="project-hero reveal">
-    <img src={project.data.images[0]} alt={project.data.title} />
-  </div>
-
-  <!-- META -->
-  <header class="project-meta reveal">
-    <h1>{project.data.title}</h1>
-    <p class="project-info">
-      {project.data.year} · {project.data.location}
-    </p>
-    <div class="project-description">
-      <p>{project.body}</p>
+  <article class="project">
+    <div class="project-hero reveal">
+      <img src={project.data.images[0]} alt={project.data.title} />
     </div>
-  </header>
 
-  <!-- GALLERY -->
-  <section class="project-gallery">
-    {project.data.images.slice(1).map(img => (
-      <img src={img} class="reveal" />
-    ))}
-  </section>
+    <header class="project-meta reveal">
+      <h1>{project.data.title}</h1>
+      <p class="project-info">{project.data.year} · {project.data.location}</p>
+      <div class="project-description"><p>{project.body}</p></div>
+    </header>
 
-</article>
-
+    <section class="project-gallery">
+      {project.data.images.slice(1).map(img => <img src={img} class="reveal" />)}
+    </section>
+  </article>
 </BaseLayout>
 
 <style>
-.project {
-  max-width: 1100px;
-  margin: auto;
-}
-
-.project-hero img {
-  width: 100%;
-  display: block;
-}
-
-.project-meta {
-  margin-top: 80px;
-  max-width: 700px;
-}
-
-.project-info {
-  color: var(--gray);
-  margin-bottom: 24px;
-}
-
-.project-gallery {
-  margin-top: 120px;
-  display: grid;
-  gap: 120px;
-}
-
-.project-gallery img {
-  width: 100%;
-  display: block;
-}
+.project { max-width:1100px; margin:auto; }
+.project-hero img, .project-gallery img { width:100%; display:block; }
+.project-meta { margin-top:80px; max-width:700px; }
+.project-info { color:var(--gray); margin-bottom:24px; }
+.project-gallery { margin-top:120px; display:grid; gap:120px; }
 </style>
