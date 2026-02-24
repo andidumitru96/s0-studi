@@ -1,3 +1,10 @@
+---
+// Import your CSS here to fix the "shit" styling issue we discussed!
+import '../styles/global.css'; 
+
+// This syntax sets "Untitled" as the default if no title is provided
+const { title = "Untitled" } = Astro.props;
+---
 <head>
   <meta charset="utf-8" />
 
@@ -37,3 +44,4 @@
     });
   </script>
 </head>
+
