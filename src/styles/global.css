@@ -1,33 +1,241 @@
-/* Menu links */
-.nav-links a {
-  text-decoration: none !important;
-  color: var(--black) !important;
+:root {
+  --black: #000;
+  --white: #fff;
+  --gray-100: #f5f5f5;
+  --gray-300: #cfcfcf;
+  --gray-600: #666;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* TYPOGRAPHY */
+
+h1, h2, h3 {
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-weight: 500;
-  transition: opacity 0.25s ease;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+p {
+  max-width: 65ch;
+  margin: 0.5rem 0 0;
+  color: var(--gray-600);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* LAYOUT */
+
+main {
+  padding: 160px 32px 140px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+section {
+  margin-bottom: 160px;
+}
+
+/* NAV */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--white);
+  z-index: 100;
+}
+
+.nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.nav-links a {
+  margin-left: 32px;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-  opacity: 0.7;
-}
-
-/* Menu button */
-.menu-toggle {
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
   color: var(--black);
 }
 
-/* Reveal animations */
+/* PROJECT GRID */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 80px 48px;
+}
+
+.project-card img {
+  width: 100%;
+  display: block;
+  margin-bottom: 16px;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover img {
+  opacity: 0.85;
+}
+
+.project-card h3 {
+  margin-top: 8px;
+}
+
+.project-card p {
+  font-size: 0.85rem;
+}
+
+/* IMAGE SEQUENCES */
+
+figure {
+  margin: 0 0 160px;
+}
+
+figure img {
+  width: 100%;
+  display: block;
+}
+
+/* REVEAL ANIMATION (APPLE-LIKE) */
+
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
-              transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* MOBILE */
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 120px 20px 100px;
+  }
+
+  section {
+    margin-bottom: 120px;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    display: none;
+    flex-direction: column;
+    padding: 32px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    margin: 16px 0;
+  }
+}
+/* =========================
+   Motion system (Apple-like)
+   ========================= */
+
+:root {
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Page elements */
+section {
+  margin-bottom: 120px;
+}
+
+/* Headings entrance */
+h1, h2 {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 1s var(--ease-apple) forwards;
+}
+
+h2 {
+  animation-delay: 0.15s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Links */
+a {
+  transition: opacity 0.3s var(--ease-soft);
+}
+
+a:hover {
+  opacity: 0.6;
 }
