@@ -329,5 +329,20 @@ p {
   font-size: 0.9rem;
   color: var(--gray);
 }
+/* Mobile nav animation */
+@media (max-width: 768px) {
+  .nav-links {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
