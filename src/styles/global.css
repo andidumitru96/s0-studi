@@ -362,5 +362,9 @@ a:hover {
   color: var(--white);
   transform: translateY(-2px);
 }
+.cta-button {
+  margin-top: 32px;
+  display: inline-block;
+}
 
 
