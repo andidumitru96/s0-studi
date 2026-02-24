@@ -292,4 +292,29 @@ a:hover {
   font-size: 0.9rem;
   color: var(--gray-600);
 }
+/* =========================
+   SERVICES LISTS
+   ========================= */
+
+.service-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+}
+
+.service-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+.service-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--black);
+}
 
