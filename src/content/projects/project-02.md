@@ -1,16 +1,24 @@
 ---
 title: "Apartament RC"
-year: "2024-2025"
+year: "2025"
 date: "2025-02-01"
-featured: false
-order: 2
+featured: true
 location: "Bucharest"
 images:
+  - /images/04.png
+  - /images/05.png
+  - /images/06.png
+  - /images/07.png
+  - /images/08.png
+  - /images/09.png
+  - /images/10.png
+  - /images/11.png
+  - /images/12.png
   - /images/13.png
-  - /images/02.png
 ---
 A compact housing prototype exploring repetition, density,
 
 and spatial economy through a restrained architectural language.
+
 
 
