@@ -264,3 +264,28 @@ a:hover {
 .map-wrapper:hover iframe {
   filter: grayscale(100%) contrast(130%) brightness(100%);
 }
+/* =========================
+   TEAM
+   ========================= */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 48px;
+  max-width: 800px;
+}
+
+.team-grid figure {
+  margin: 0;
+}
+
+.team-grid img {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.team-grid figcaption {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
