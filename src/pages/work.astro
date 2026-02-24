@@ -3,27 +3,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects"))
-  .sort((a, b) =>
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  );
+  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
 ---
 
 <BaseLayout title="Work — s_0 studio">
-<section>
-  <h1>Work</h1>
-</section>
+  <section>
+    <h1>Work</h1>
+  </section>
 
-<section>
-  <div class="project-grid">
-    {projects.map(project => (
-      <a href=... class="project-card reveal" style={`transition-delay:${index * 80}ms`}>
-        <img src={project.data.images[0]} alt={project.data.title} />
-        <h3>{project.data.title}</h3>
-        <p>{project.data.year}</p>
-      </a>
-    ))}
-  </div>
-</section>
+  <section>
+    <div class="project-grid">
+      {projects.map((project, index) => (
+        <a
+          href={`/projects/${project.slug}`}
+          class="project-card reveal"
+          style={`transition-delay:${index * 80}ms`}
+        >
+          <img src={project.data.images[0]} alt={project.data.title} />
+          <h3>{project.data.title}</h3>
+          <p>{project.data.year}</p>
+        </a>
+      ))}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -32,6 +34,4 @@ const projects = (await getCollection("projects"))
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
 }
-
 </style>
-
