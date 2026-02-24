@@ -6,6 +6,12 @@ const { title } = Astro.props;
 <head>
   <meta charset="utf-8" />
   <title>{title}</title>
+<meta name="description" content="s_0 studio — Architecture & spatial research practice." />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content="Architecture & spatial research by s_0 studio." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url.href} />
 
   <!-- Global styles -->
   <link rel="stylesheet" href="/styles/global.css" />
@@ -161,3 +167,4 @@ header {
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 </style>
+
