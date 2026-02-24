@@ -4,35 +4,49 @@ import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects"))
   .filter(p => p.data.featured)
-  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+  .sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
 ---
 
-<BaseLayout title="s_0 studio — Architecture & Spatial Research">
-  <section class="hero">
-    <h1 class="hero-title">s_0 studio<br/>architecture & spatial research</h1>
-    <p class="hero-text">A design studio operating at the intersection of architecture, research, and contemporary spatial practice.</p>
-  </section>
+<BaseLayout title="s_0 studio">
+<section>
+  <h1>
+    s_0 studio<br />
+    architecture & spatial research
+  </h1>
 
-  <section>
-    <h2>Selected Work</h2>
-    <div class="project-grid">
-      {projects.map(project => (
-        <a href={`/projects/${project.slug}`} class="project-card reveal">
-          <img src={project.data.images[0]} alt={project.data.title} />
-          <h3>{project.data.title}</h3>
-          <p>{project.data.year}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  <p>
+    A design studio operating at the intersection of architecture,
+    research, and contemporary spatial practice.
+  </p>
+</section>
+
+<section>
+  <h2>Selected Work</h2>
+
+  <div class="project-grid">
+    {projects.map(project => (
+      <a href={`/projects/${project.slug}`} class="project-card reveal">
+        <img src={project.data.images[0]} alt={project.data.title} />
+        <h3>{project.data.title}</h3>
+        <p>{project.data.year}</p>
+      </a>
+    ))}
+  </div>
+</section>
 </BaseLayout>
 
 <style>
-.hero { margin-bottom: 160px; }
-.hero-title, .hero-text { opacity:0; transform:translateY(20px); animation: heroIn 1.1s cubic-bezier(0.16,1,0.3,1) forwards; }
-.hero-text { animation-delay:0.15s; margin-top:24px; max-width:55ch; }
-@keyframes heroIn { to { opacity:1; transform:translateY(0); } }
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+}
+.project-card img {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+}
 
-.project-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:64px; }
-.project-card img { width:100%; display:block; margin-bottom:12px; }
 </style>
