@@ -217,10 +217,17 @@ section {
 }
 
 /* Headings entrance */
-h1, h2 {
+.reveal {
   opacity: 0;
   transform: translateY(24px);
-  animation: fadeUp 1s var(--ease-apple) forwards;
+  transition:
+    opacity 0.9s var(--ease-apple),
+    transform 0.9s var(--ease-apple);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 h2 {
@@ -355,4 +362,5 @@ a:hover {
   color: var(--white);
   transform: translateY(-2px);
 }
+
 
