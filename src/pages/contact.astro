@@ -14,10 +14,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     +40 770 644 501
   </a>
 </p>
-  <p>
-    <a href="#">Instagram</a> ·
-    <a href="#">LinkedIn</a>
-  </p>
+<p>
+  <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener">
+    :contentReference[oaicite:0]{index=0}
+  </a>
+  ·
+  <a href="https://www.linkedin.com/company/YOUR_COMPANY" target="_blank" rel="noopener">
+    :contentReference[oaicite:1]{index=1}
+  </a>
+</p>
+p a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 </section>
 
 <section>
@@ -30,6 +39,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </iframe>
   </div>
 </section>
+
 
 
 
