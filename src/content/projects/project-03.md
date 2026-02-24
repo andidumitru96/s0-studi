@@ -1,11 +1,14 @@
 ---
-title: "Apt XX"
-year: "2025-2026"
+title: "Apartament XX"
+year: "2024"
 date: "2024-02-01"
 featured: true
-order: 3
 location: "Bucharest"
 images:
+  - /images/01a.png
+  - /images/02.png
+  - /images/03.png
+  - /images/04.png
   - /images/05.png
   - /images/06.png
   - /images/07.png
@@ -19,4 +22,6 @@ images:
 A compact housing prototype exploring repetition, density,
 
 and spatial economy through a restrained architectural language.
+
+
 
