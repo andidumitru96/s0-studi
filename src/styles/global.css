@@ -300,6 +300,43 @@ a:hover {
   color: var(--gray-600);
 }
 /* =========================
+   TEAM
+   ========================= */
+
+.team-founder figure,
+.team-grid figure {
+  margin: 0;
+}
+
+.team-founder img,
+.team-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* Forces square */
+  object-fit: cover;    /* Crops nicely, no distortion */
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Founder layout */
+.team-founder {
+  max-width: 320px;
+  margin-bottom: 80px;
+}
+
+.founder-bio {
+  margin-top: 24px;
+  font-size: 0.95rem;
+  color: var(--gray-600);
+}
+
+/* Team grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 48px;
+  max-width: 800px;
+}
+/* =========================
    SERVICES LISTS
    ========================= */
 
@@ -366,5 +403,6 @@ a:hover {
   margin-top: 32px;
   display: inline-block;
 }
+
 
 
