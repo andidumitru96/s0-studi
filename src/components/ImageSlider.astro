@@ -1,0 +1,97 @@
+---
+layout: ../layouts/BaseLayout.astro
+---
+
+<script setup>
+import { ref } from 'vue';
+
+// Define props
+const props = defineProps({
+  images: {
+    type: Array,
+    required: true,
+  },
+});
+
+// Setup state
+const currentIndex = ref(0);
+
+// Previous and next handlers
+const next = () => {
+  currentIndex.value = (currentIndex.value + 1) % props.images.length;
+};
+
+const previous = () => {
+  currentIndex.value = (currentIndex.value - 1 + props.images.length) % props.images.length;
+};
+
+// Dot click handler
+const goToImage = (index) => {
+  currentIndex.value = index;
+};
+</script>
+
+<style>
+.image-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(-{{ currentIndex }} * 100%);
+}
+
+.image {
+  min-width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #333;
+}
+</style>
+
+<div class="image-slider">
+  <div class="images">
+    <img v-for="(image, index) in props.images" :key="index" :src="image" class="image" alt="Image {{ index + 1 }}" />
+  </div>
+  <div class="controls">
+    <button @click="previous">Previous</button>
+    <button @click="next">Next</button>
+  </div>
+  <div class="dots">
+    <span
+      v-for="(image, index) in props.images"
+      :key="index"
+      class="dot"
+      :class="{ active: index === currentIndex }"
+      @click="goToImage(index)"
+    ></span>
+  </div>
+</div>
