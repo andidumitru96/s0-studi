@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ImageSlider from "../../components/ImageSlider.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout title={`${project.data.title} — s_0 studio`}>  
+
+<section>  
+  <figure class="reveal">  
+    <img src={project.data.images[0]} alt={project.data.title} />  
+  </figure>  
+
+  <h1>{project.data.title}</h1>  
+  <p>{project.data.year} · {project.data.location}</p>  
+
+  <p style="margin-top: 32px; max-width: 60ch;">
+    {project.body}
+  </p>  
+</section>
+
+{project.data.images.length > 1 && (
+  <section>
+    <ImageSlider client:load images={project.data.images.slice(1)} />
+  </section>
+)}
+
+</BaseLayout>
