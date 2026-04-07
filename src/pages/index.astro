@@ -1,1 +1,62 @@
-<div style="aspect-ratio: 3 / 2; overflow: hidden;"><img src="path/to/image.jpg" style="object-fit: cover; width: 100%; height: 100%;" alt="Project Image" /></div>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects"))
+  .filter(p => p.data.featured)
+  .sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
+---
+
+<BaseLayout title="s_0 studio">
+<section>
+  <h1>
+  Sector_0 studio<br />
+  Architecture & Interior Design
+</h1>
+
+  <p>
+   Projects defined by clarity, proportion, and control — from concept to execution.
+  </p>
+</section>
+
+<section>
+  <h2>London - Milan - Bucharest</h2>
+
+  <div class="project-grid">
+    {projects.map(project => (
+      <a href={`/projects/${project.slug}`} class="project-card reveal">
+        <div class="project-image-wrapper">
+          <img src={project.data.images[0]} alt={project.data.title} />
+        </div>
+        <h3>{project.data.title}</h3>
+        <p>{project.data.year}</p>
+      </a>
+    ))}
+  </div>
+</section>
+</BaseLayout>
+
+<style>
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+}
+
+.project-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.project-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+</style>
