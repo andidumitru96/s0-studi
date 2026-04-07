@@ -5,19 +5,13 @@ date: "2024-02-01"
 featured: true
 location: "Bucharest"
 images:
-  - /images/01a.png
-  - /images/02.png
-  - /images/03.png
-  - /images/04.png
-  - /images/05.png
-  - /images/06.png
-  - /images/07.png
-  - /images/08.png
-  - /images/09.png
-  - /images/10.png
-  - /images/11.png
-  - /images/12.png
-  - /images/13.png
+  - /images/03/d01 (2).png
+  - /images/03/d01 (3).png
+  - /images/03/d01 (4).png
+  - /images/03/d01 (6).png
+  - /images/03/d01 (7).png
+  - /images/03/d01 (8).png
+
 ---
 A compact housing prototype exploring repetition, density,
 
