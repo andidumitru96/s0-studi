@@ -155,7 +155,12 @@ header {
 /* IMAGE SEQUENCES */
 
 figure {
-  margin: 0 0 160px;
+  margin: 0;
+}
+
+/* Only apply spacing where needed */
+section > figure {
+  margin-bottom: 160px;
 }
 
 figure img {
@@ -461,4 +466,6 @@ a:hover {
   margin-left: calc(50% - 50vw); /* break out of container */
   margin-top: 120px;
 }
-
+.slider figure {
+  margin: 0 !important;
+}
