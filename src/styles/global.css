@@ -454,17 +454,22 @@ a:hover {
 }
 
 .project-slider {
+  position: relative;
+
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
   margin-top: 120px;
 }
+.slider {
+  display: block;
+}
 
-/* =========================
-   FORCE HORIZONTAL EXPERIENCE
-   ========================= */
-
-.project-slider {
-  width: 100vw;
-  margin-left: calc(50% - 50vw); /* break out of container */
-  margin-top: 120px;
+.slider-track {
+  align-items: stretch;
 }
 .slider figure {
   margin: 0 !important;
