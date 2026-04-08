@@ -452,5 +452,13 @@ a:hover {
   margin-top: 120px;
 }
 
+/* =========================
+   FORCE HORIZONTAL EXPERIENCE
+   ========================= */
 
+.project-slider {
+  width: 100vw;
+  margin-left: calc(50% - 50vw); /* break out of container */
+  margin-top: 120px;
+}
 
