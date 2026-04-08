@@ -6,170 +6,85 @@ interface Props {
 const { images } = Astro.props as Props;
 ---
 
-<div class="image-slider">
-  <div class="slider-container">
-    <div class="images-wrapper">
-      {images.map((image, index) => (
+<div class="slider">
+  <div class="slider-track">
+    {images.map((image, index) => (
+      <figure class="slide">
         <img 
           src={image} 
           alt={`Project image ${index + 1}`} 
-          class="slider-image"
-          data-index={index}
+          loading="lazy"
+          decoding="async"
         />
-      ))}
-    </div>
-    
-    <button class="slider-btn prev" aria-label="Previous image">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-    <button class="slider-btn next" aria-label="Next image">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
-  </div>
-  
-  <div class="dots-container">
-    {images.map((_, index) => (
-      <button class="dot" data-index={index} aria-label={`Go to image ${index + 1}`}></button>
+      </figure>
     ))}
   </div>
 </div>
 
 <style>
-.image-slider {
-  width: 100%;
+/* =========================
+   ARCHITECTURAL SLIDER SYSTEM
+   ========================= */
+
+/* Break out of layout constraints */
+.slider {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 0 5vw;
 }
 
-.slider-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: #f5f5f5;
-}
-
-.images-wrapper {
+/* Horizontal flow */
+.slider-track {
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateX(0);
+  gap: 32px;
 }
 
-.slider-image {
+/* Each image = viewport-based */
+.slide {
+  flex: 0 0 90vw;
+  scroll-snap-align: center;
+}
+
+/* Image behavior */
+.slide img {
   width: 100%;
-  height: auto;
-  flex-shrink: 0;
-  display: block;
+  height: 85vh;
   object-fit: cover;
+  display: block;
+
+  /* premium motion */
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  color: #333;
-  z-index: 10;
+.slide:hover img {
+  transform: scale(1.015);
 }
 
-.slider-btn:hover {
-  background: rgba(255, 255, 255, 0.95);
-  transform: translateY(-50%) scale(1.1);
+/* Remove scrollbar (clean UI) */
+.slider::-webkit-scrollbar {
+  display: none;
 }
 
-.slider-btn.prev {
-  left: 16px;
+.slider {
+  scrollbar-width: none;
 }
 
-.slider-btn.next {
-  right: 16px;
-}
+/* Mobile refinement */
+@media (max-width: 768px) {
+  .slide {
+    flex: 0 0 92vw;
+  }
 
-.dots-container {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 16px 0;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: #d0d0d0;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.dot.active {
-  background: #333;
-  width: 28px;
-  border-radius: 5px;
-}
-
-.dot:hover {
-  background: #999;
+  .slide img {
+    height: 70vh;
+  }
 }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sliders = document.querySelectorAll('.image-slider');
-    
-    sliders.forEach(slider => {
-      const imagesWrapper = slider.querySelector('.images-wrapper');
-      const images = slider.querySelectorAll('.slider-image');
-      const prevBtn = slider.querySelector('.slider-btn.prev');
-      const nextBtn = slider.querySelector('.slider-btn.next');
-      const dots = slider.querySelectorAll('.dot');
-
-      if (images.length === 0) return;
-
-      let currentIndex = 0;
-
-      function updateSlider() {
-        imagesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
-        });
-      }
-
-      function goToSlide(index) {
-        currentIndex = (index + images.length) % images.length;
-        updateSlider();
-      }
-
-      function nextSlide() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlider();
-      }
-
-      function prevSlide() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateSlider();
-      }
-
-      prevBtn?.addEventListener('click', prevSlide);
-      nextBtn?.addEventListener('click', nextSlide);
-      
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => goToSlide(index));
-      });
-
-      updateSlider();
-    });
-  });
-</script>
