@@ -10,7 +10,7 @@ images:
   - /images/06/g01 (3).png
   - /images/06/g01 (4).png
   - /images/06/g01 (5).png
-  - /images/06/dfe8ac97-7ff8-40b7-bdb3-e1aeee7972c9.png
+
 
 ---
 A brief project description exploring key design concepts and spatial qualities.
