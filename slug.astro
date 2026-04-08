@@ -32,8 +32,9 @@ const { project } = Astro.props;
 </section>
 
 {project.data.images.length > 1 && (
-  <section class="project-slider">
-    <ImageSlider client:load images={project.data.images.slice(1)} />
-  </section>
+  <div class="project-slider">
+    <ImageSlider images={project.data.images.slice(1)} />
+  </div>
 )}
+
 </BaseLayout>
