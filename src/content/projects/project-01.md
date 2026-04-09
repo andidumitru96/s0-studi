@@ -2,8 +2,8 @@
 title: "Apartament AC-B"
 year: "2025-2026"
 date: "2026-02-01"
-featured: false
-location: "Bucharest"
+featured: true
+location: "Bucharest,Romania"
 images:
   - /images/01/a01-2.png
   - /images/01/a01-2.png
