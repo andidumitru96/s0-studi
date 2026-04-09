@@ -1,10 +1,11 @@
 ---
 title: "Generic Project Title"
 year: "2025-2026"
-date: "2026-04-07"
-featured: false
-location: "City, Country"
+date: "2025-04-07"
+featured: true
+location: Bucharest,Romania
 images:
+  - /images/06/g01 (1).png
   - /images/06/g01 (1).png
   - /images/06/g01 (2).png
   - /images/06/g01 (3).png
@@ -13,8 +14,4 @@ images:
 
 
 ---
-A brief project description exploring key design concepts and spatial qualities.
-
-Add your detailed project narrative here. Describe the project's approach, methodology, and creative vision.
-
-Additional context and project insights can be included as needed.
+A calm and balanced interior articulated through clarity of form and material continuity, this project is defined by the use of dark walnut volumes that anchor the space and create a strong yet refined architectural presence. These elements integrate storage, seating, and transitions into a cohesive system, while neutral walls and soft textiles amplify natural light, preventing the composition from becoming heavy.
