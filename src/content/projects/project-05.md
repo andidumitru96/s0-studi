@@ -3,7 +3,7 @@ title: "Apartament RC"
 year: "2026"
 date: "2026-03-01"
 featured: true
-location: "Bucharest"
+location: "Bucharest,Romania"
 images:
   - /images/05/f01 (2).png
   - /images/05/f01 (2).png
