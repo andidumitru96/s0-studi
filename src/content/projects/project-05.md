@@ -2,7 +2,7 @@
 title: "Casa Q"
 year: "2026"
 date: "2026-03-01"
-featured: false
+featured: true
 location: "Bucharest,Romania"
 images:
   - /images/05/f01 (2).png
