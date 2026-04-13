@@ -31,10 +31,13 @@ const { project } = Astro.props;
   <p>{project.body}</p>
 </section>
 
-{project.data.images.length > 1 && (
-  <div class="project-slider">
-    <ImageSlider images={project.data.images.slice(1)} />
-  </div>
-)}
+<section class="project-gallery">
+  {project.data.images.slice(1).map((img) => (
+    <figure class="gallery-item">
+      <img src={img} alt={project.data.title} />
+    </figure>
+  ))}
+
+</section>
 
 </BaseLayout>
