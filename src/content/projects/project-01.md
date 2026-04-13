@@ -5,7 +5,7 @@ date: "2026-02-01"
 featured: true
 location: "Bucharest, Romania"
 images:
-  - /images/01/a00.png
+  - /images/01/a01-3.png
   - /images/01/a00.png
   - /images/01/a01-3.png
   - /images/01/a01-4.png
