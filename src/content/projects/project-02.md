@@ -6,6 +6,7 @@ featured: true
 location: "Bucharest"
 images:
   - /images/02/b01 (1).png
+  - /images/02/b01 (1).png
   - /images/02/b01 (2).png
   - /images/02/b01 (3).png
 ---
