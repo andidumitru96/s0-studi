@@ -2,8 +2,8 @@
 title: "Apartament AD"
 year: "2026"
 date: "2026-02-01"
-featured: "true"
-location: "Bucharest,Romania"
+featured: true
+location: "Bucharest, Romania"
 images:
   - /images/01/a00.png
   - /images/01/a00.png
