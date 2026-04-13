@@ -2,7 +2,7 @@
 title: "Casa T"
 year: "2026"
 date: "2026-02-01"
-featured: lase
+featured: "falase"
 location: "Bucharest,Romania"
 images:
   - /images/04/e 01 (1).png
