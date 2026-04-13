@@ -40,7 +40,7 @@ const { title = "s_0 studio" } = Astro.props;
           nav.classList.toggle("open")
         );
 
-        const reveals = document.querySelectorAll(".reveal");
+       const reveals = document.querySelectorAll(".reveal, .gallery-item");
         const observer = new IntersectionObserver(
           entries => {
             entries.forEach(e => {
