@@ -453,24 +453,67 @@ a:hover {
   margin-top: 120px;
 }
 
-.project-slider {
-  position: relative;
+/* =========================
+   PROJECT GALLERY (NEW)
+   ========================= */
 
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-
+.project-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
   margin-top: 120px;
 }
-.slider {
-  display: block;
+
+.gallery-item {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
 }
 
-.slider-track {
-  align-items: stretch;
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
-.slider figure {
-  margin: 0 !important;
+
+.gallery-item img {
+  width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+}
+
+/* rhythm variation */
+.gallery-item:nth-child(3n) {
+  max-width: 800px;
+}
+
+
+/* =========================
+   PROJECT HERO REFINED
+   ========================= */
+
+.project-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.project-hero img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: cover;
+}
+
+.project-meta {
+  align-self: end;
+}
+
+.project-description {
+  margin-top: 100px;
+  font-size: 1rem;
+  line-height: 1.7;
 }
