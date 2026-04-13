@@ -2,7 +2,7 @@
 title: "Apartament X"
 year: "2025"
 date: "2025-02-01"
-featured: "true"
+featured: true
 location: "Bucharest"
 images:
   - /images/02/b01 (1).png
