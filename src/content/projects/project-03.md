@@ -1,7 +1,7 @@
 ---
 title: "Apartament M"
-year: "2025"
-date: "2025-02-01"
+year: "2026"
+date: "2026-02-01"
 featured: true
 location: "Bucharest"
 images:
