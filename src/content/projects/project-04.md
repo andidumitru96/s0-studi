@@ -1,5 +1,5 @@
 ---
-title: "Apartment Q"
+title: "Casa T"
 year: "2026"
 date: "2026-02-01"
 featured: lase
