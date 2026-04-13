@@ -2,7 +2,7 @@
 title: "Apartment AC-B"
 year: "2025-2026"
 date: "2025-04-07"
-featured: "false"
+featured: true
 location: Bucharest,Romania
 images:
   - /images/06/g01 (1).png
