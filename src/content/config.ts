@@ -6,7 +6,7 @@ const projects = defineCollection({
     year: z.string(),
     date: z.string(),
     location: z.string(),
-    featured: z.boolean().optional(),
+    featured: z.coerce.boolean().optional()
     images: z.array(z.string()),
   }),
 });
