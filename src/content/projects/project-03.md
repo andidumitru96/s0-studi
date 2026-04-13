@@ -1,5 +1,5 @@
 ---
-title: "Apartament XX"
+title: "Apartament M"
 year: "2024"
 date: "2024-02-01"
 featured: true
