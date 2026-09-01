@@ -7,7 +7,7 @@ import { projects } from "../data/projects.js";
 const featured = projects.slice(0, 3);
 ---
 
-<BaseLayout>
+<BaseLayout preloadImage={featured[0].cover}>
   <main>
     <section class="hero" aria-label="Featured projects" data-hero data-featured={JSON.stringify(featured.map(({ slug, title, year, discipline }) => ({ slug, title, year, discipline })))}>
       <div class="hero__media" aria-hidden="true">
@@ -44,6 +44,34 @@ const featured = projects.slice(0, 3);
       </div>
     </section>
 
+    <section class="home-services section-pad" aria-labelledby="home-services-title">
+      <div class="reveal home-services__heading">
+        <p class="eyebrow">Architecture / Interiors / Custom furniture</p>
+        <h2 id="home-services-title">Spaces designed from the plan to the last custom detail.</h2>
+      </div>
+      <div class="home-services__grid">
+        <article class="reveal">
+          <span>01</span>
+          <h3>Architecture</h3>
+          <p>Residential architecture and renovation shaped by context, proportion, regulations and construction logic.</p>
+        </article>
+        <article class="reveal" style="transition-delay:70ms">
+          <span>02</span>
+          <h3>Interior design</h3>
+          <p>Complete interior architecture for apartments and houses, from layouts and materials to lighting and technical drawings.</p>
+        </article>
+        <article class="reveal" style="transition-delay:140ms">
+          <span>03</span>
+          <h3>Custom furniture</h3>
+          <p>Bespoke furniture and joinery developed as part of the architecture, detailed for trusted makers and precise execution.</p>
+        </article>
+      </div>
+      <div class="reveal home-services__footer">
+        <p>Sector 0 is based in Bucharest and works on selected projects across Romania and Europe.</p>
+        <a href="/services" class="text-link">Explore our services <Icon name="arrow-right" /></a>
+      </div>
+    </section>
+
     <section class="selected-work section-pad">
       <div class="section-heading">
         <p class="eyebrow">Selected work · 2025—2026</p>
@@ -73,7 +101,7 @@ const featured = projects.slice(0, 3);
     </section>
 
     <section class="founder-preview section-pad">
-      <div class="reveal founder-preview__image"><img src="/images/Andi Dumitru2.jpg" alt="Andi Dumitru, founder and architect at Sector 0 Studio" loading="lazy" /></div>
+      <div class="reveal founder-preview__image"><img src="/images/Andi Dumitru2.webp" alt="Andi Dumitru, founder and architect at Sector 0 Studio" loading="lazy" /></div>
       <div class="reveal founder-preview__copy" style="transition-delay:100ms">
         <p class="eyebrow">Andi Dumitru / Architect</p>
         <h2>A small practice, closely involved in every project.</h2>

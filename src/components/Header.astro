@@ -20,19 +20,20 @@ const navigation = [
     {navigation.map((item) => <a href={item.href} class:list={[pathname === item.href && "is-active"]}>{item.label}</a>)}
   </nav>
   <button type="button" class="menu-trigger" data-menu-open aria-label="Open navigation" aria-expanded="false"><Icon name="menu" /></button>
-  <div class="site-menu__backdrop" data-menu-backdrop></div>
-  <aside class="site-menu" data-site-menu aria-hidden="true" aria-label="Mobile navigation">
-    <button type="button" class="site-menu__close" data-menu-close aria-label="Close navigation"><Icon name="close" /></button>
-    <div class="site-menu__topline"><span>Sector 0 Studio</span><span>Bucharest · Europe</span></div>
-    <nav class="site-menu__nav">
-      {navigation.map((item) => <a href={item.href}><span>{item.index}</span>{item.label}</a>)}
-    </nav>
-    <div class="site-menu__footer">
-      <a href="mailto:info@sector0studio.com">info@sector0studio.com</a>
-      <a href="tel:+40770644501">+40 770 644 501</a>
-    </div>
-  </aside>
 </header>
+
+<div class="site-menu__backdrop" data-menu-backdrop></div>
+<aside class="site-menu" data-site-menu aria-hidden="true" aria-label="Mobile navigation">
+  <button type="button" class="site-menu__close" data-menu-close aria-label="Close navigation"><Icon name="close" /></button>
+  <div class="site-menu__topline"><span>Sector 0 Studio</span><span>Bucharest · Europe</span></div>
+  <nav class="site-menu__nav">
+    {navigation.map((item) => <a href={item.href}><span>{item.index}</span>{item.label}</a>)}
+  </nav>
+  <div class="site-menu__footer">
+    <a href="mailto:info@sector0studio.com">info@sector0studio.com</a>
+    <a href="tel:+40770644501">+40 770 644 501</a>
+  </div>
+</aside>
 
 <script is:inline>
   (() => {

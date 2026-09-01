@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.sector0studio.com/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.sector0studio.com/work/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.sector0studio.com/studio/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sector0studio.com/services/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sector0studio.com/services/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.sector0studio.com/ro/servicii/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sector0studio.com/services/" />
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.sector0studio.com/ro/servicii/</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.sector0studio.com/ro/servicii/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sector0studio.com/services/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sector0studio.com/services/" />
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.sector0studio.com/contact/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://www.sector0studio.com/projects/casa-q/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.sector0studio.com/projects/apartament-ad/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.sector0studio.com/projects/apartament-m/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.sector0studio.com/projects/casa-t/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.sector0studio.com/projects/apartment-ac-b/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.sector0studio.com/projects/apartament-x/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority></url>
+</urlset>

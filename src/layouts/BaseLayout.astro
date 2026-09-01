@@ -4,28 +4,71 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
 const {
-  title = "Sector 0 Studio — Architecture & Interior Design",
-  description = "Sector 0 is a Bucharest-based architecture and interior design studio creating precise, materially rich spaces from concept to execution.",
+  title = "Architecture & Interior Design Studio Bucharest | Sector 0",
+  description = "Sector 0 is an architecture and interior design studio in Bucharest creating residential spaces, renovations and custom furniture from concept to execution.",
   image = "/og.png",
+  preloadImage,
+  lang = "en",
+  ogLocale = lang === "ro" ? "ro_RO" : "en_GB",
+  alternateLanguages = [],
+  schema,
 } = Astro.props;
 
 const site = "https://www.sector0studio.com";
 const canonical = new URL(Astro.url.pathname, site).href;
 const socialImage = new URL(image, site).href;
+const studioSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${site}/#studio`,
+  name: "Sector 0 Studio",
+  url: site,
+  image: `${site}/og.png`,
+  logo: `${site}/favicon.svg`,
+  description: "Independent architecture and interior design studio in Bucharest, Romania.",
+  email: "info@sector0studio.com",
+  telephone: "+40 770 644 501",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bucharest",
+    addressCountry: "RO",
+  },
+  areaServed: ["Bucharest", "Romania", "Europe"],
+  sameAs: ["https://www.instagram.com/sector0studio/"],
+  founder: {
+    "@type": "Person",
+    name: "Andi Dumitru",
+    jobTitle: "Architect",
+  },
+  knowsAbout: [
+    "Architecture",
+    "Interior architecture",
+    "Interior design",
+    "Residential renovation",
+    "Custom furniture",
+    "Custom joinery",
+  ],
+};
+const structuredData = schema ? [studioSchema, schema] : studioSchema;
 ---
 
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang={lang} class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Sector 0 Studio" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#e9e5dc" />
     <link rel="canonical" href={canonical} />
+    {alternateLanguages.map(({ hreflang, href }) => <link rel="alternate" hreflang={hreflang} href={new URL(href, site).href} />)}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Sector 0 Studio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -35,6 +78,7 @@ const socialImage = new URL(image, site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <script is:inline>document.documentElement.classList.remove("no-js"); document.documentElement.classList.add("js");</script>
   </head>
   <body>

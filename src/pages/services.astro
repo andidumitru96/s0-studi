@@ -17,6 +17,12 @@ const services = [
   },
   {
     index: "03",
+    title: "Custom furniture & joinery",
+    lead: "Bespoke pieces designed as an integral part of the space and resolved for precise fabrication.",
+    items: ["Furniture concepts and specifications", "Built-in joinery systems", "Kitchen and bathroom cabinetry", "Detailed fabrication drawings", "Material and hardware selection", "Maker coordination and reviews"],
+  },
+  {
+    index: "04",
     title: "Direction & delivery",
     lead: "Continuity between the design on paper and the space that is ultimately built.",
     items: ["Budget and scope alignment", "Supplier and maker coordination", "Material sampling and approvals", "Procurement guidance", "Site reviews and design clarifications", "Final styling direction"],
@@ -24,7 +30,15 @@ const services = [
 ];
 ---
 
-<BaseLayout title="Services — Sector 0 Studio" description="Architecture and interior design services from concept through execution.">
+<BaseLayout
+  title="Architecture, Interior Design & Custom Furniture | Sector 0"
+  description="Architecture, interior design, renovation and custom furniture services in Bucharest, developed by Sector 0 Studio from concept through execution."
+  alternateLanguages={[
+    { hreflang: "en", href: "/services/" },
+    { hreflang: "ro", href: "/ro/servicii/" },
+    { hreflang: "x-default", href: "/services/" },
+  ]}
+>
   <main class="page-shell services-page">
     <header class="page-hero page-hero--services section-pad">
       <p class="eyebrow">What we do</p>

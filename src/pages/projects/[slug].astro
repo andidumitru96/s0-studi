@@ -10,11 +10,28 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 const currentIndex = projects.findIndex((item) => item.slug === project.slug);
 const nextProject = projects[(currentIndex + 1) % projects.length];
-const title = `${project.title} — Sector 0 Studio`;
-const description = `${project.statement} ${project.location}, ${project.year}.`;
+const title = `${project.title} — Interior Design Bucharest | Sector 0`;
+const description = `${project.statement} A residential interior architecture and custom furniture project by Sector 0 Studio in ${project.location}, ${project.year}.`;
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.title,
+  description: project.description,
+  image: project.images.map((image) => new URL(image, "https://www.sector0studio.com").href),
+  dateCreated: project.year.slice(0, 4),
+  locationCreated: {
+    "@type": "Place",
+    name: project.location,
+  },
+  creator: {
+    "@type": "Organization",
+    "@id": "https://www.sector0studio.com/#studio",
+    name: "Sector 0 Studio",
+  },
+};
 ---
 
-<BaseLayout title={title} description={description} image={project.cover}>
+<BaseLayout title={title} description={description} image={project.cover} preloadImage={project.cover} schema={projectSchema}>
   <main class="project-page">
     <header class="project-hero">
       <img src={project.cover} alt={`${project.title} hero interior`} fetchpriority="high" />
@@ -34,13 +51,32 @@ const description = `${project.statement} ${project.location}, ${project.year}.`
       <div class="reveal project-intro__text" style="transition-delay:120ms"><p>{project.description}</p></div>
     </section>
 
-    <section class="project-gallery section-pad" aria-label={`${project.title} image gallery`}>
-      {project.images.map((image, index) => (
-        <div class:list={["reveal", "project-gallery__item", `project-gallery__item--${index % 5}`]}>
-          <img src={image} alt={`${project.title} — interior view ${index + 1}`} loading={index < 2 ? "eager" : "lazy"} decoding="async" />
-          <span>0{index + 1}</span>
+    <section
+      class="project-gallery project-slider section-pad"
+      aria-label={`${project.title} image gallery`}
+      aria-roledescription="carousel"
+      tabindex="0"
+      data-project-slider
+    >
+      <div class="project-slider__topline">
+        <p class="eyebrow">Project gallery</p>
+        <p aria-live="polite"><span data-slider-current>01</span> / {String(project.images.length).padStart(2, "0")}</p>
+      </div>
+      <div class="project-slider__viewport">
+        <div class="project-slider__track" data-slider-track>
+          {project.images.map((image, index) => (
+            <figure class="project-slider__slide" data-slider-slide aria-hidden={index === 0 ? "false" : "true"}>
+              <img src={image} alt={`${project.title} — interior view ${index + 1}`} loading="lazy" decoding="async" />
+              <figcaption>{String(index + 1).padStart(2, "0")}</figcaption>
+            </figure>
+          ))}
         </div>
-      ))}
+        <div class="project-slider__controls" aria-label="Gallery controls">
+          <button type="button" data-slider-prev aria-label="Previous image"><Icon name="arrow-left" /></button>
+          <button type="button" data-slider-next aria-label="Next image"><Icon name="arrow-right" /></button>
+        </div>
+      </div>
+      <div class="project-slider__progress" aria-hidden="true"><span data-slider-progress></span></div>
     </section>
 
     <section class="next-project section-pad">
@@ -50,3 +86,50 @@ const description = `${project.statement} ${project.location}, ${project.year}.`
     </section>
   </main>
 </BaseLayout>
+
+<script is:inline>
+  (() => {
+    const slider = document.querySelector("[data-project-slider]");
+    if (!slider) return;
+
+    const track = slider.querySelector("[data-slider-track]");
+    const slides = [...slider.querySelectorAll("[data-slider-slide]")];
+    const current = slider.querySelector("[data-slider-current]");
+    const progress = slider.querySelector("[data-slider-progress]");
+    const previous = slider.querySelector("[data-slider-prev]");
+    const next = slider.querySelector("[data-slider-next]");
+    if (!track || !current || !progress || !previous || !next || slides.length === 0) return;
+
+    let active = 0;
+    let pointerStart = null;
+
+    const show = (requested) => {
+      active = (requested + slides.length) % slides.length;
+      track.style.transform = `translate3d(-${active * 100}%, 0, 0)`;
+      current.textContent = String(active + 1).padStart(2, "0");
+      progress.style.transform = `scaleX(${(active + 1) / slides.length})`;
+      slides.forEach((slide, index) => slide.setAttribute("aria-hidden", String(index !== active)));
+    };
+
+    previous.addEventListener("click", () => show(active - 1));
+    next.addEventListener("click", () => show(active + 1));
+    slider.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") { event.preventDefault(); show(active - 1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); show(active + 1); }
+    });
+    track.addEventListener("pointerdown", (event) => {
+      pointerStart = event.clientX;
+      track.setPointerCapture?.(event.pointerId);
+    });
+    track.addEventListener("pointerup", (event) => {
+      if (pointerStart === null) return;
+      const distance = event.clientX - pointerStart;
+      pointerStart = null;
+      if (Math.abs(distance) < 45) return;
+      show(active + (distance < 0 ? 1 : -1));
+    });
+    track.addEventListener("pointercancel", () => { pointerStart = null; });
+
+    show(0);
+  })();
+</script>

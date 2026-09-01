@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+
+const services = [
+  {
+    index: "01",
+    title: "Arhitectură rezidențială",
+    lead: "Case noi, extinderi și renovări dezvoltate printr-o relație clară între context, funcțiune, buget și construcție.",
+    items: ["Analiză de teren și fezabilitate", "Concept și studii volumetrice", "Documentații pentru avizare și autorizare", "Proiect tehnic și detalii de execuție", "Coordonarea specialităților", "Asistență în faza de șantier"],
+  },
+  {
+    index: "02",
+    title: "Design interior",
+    lead: "Proiecte complete pentru apartamente și case, în care planul, materialele, lumina și obiectele formează un singur sistem.",
+    items: ["Brief și strategie spațială", "Recompartimentare și planuri de mobilare", "Concept, materiale și iluminat", "Vizualizări fotorealiste", "Detalii tehnice complete", "Liste de finisaje și obiecte"],
+  },
+  {
+    index: "03",
+    title: "Mobilier custom & tâmplărie",
+    lead: "Piese unicat și volume integrate, desenate pentru spațiul concret și detaliate pentru o execuție precisă.",
+    items: ["Bucătării și corpuri încastrate", "Dressinguri și spații de depozitare", "Mobilier pentru living și dormitor", "Selecție de materiale și feronerie", "Desene pentru producție", "Coordonare cu producătorii"],
+  },
+  {
+    index: "04",
+    title: "Coordonare & implementare",
+    lead: "Continuitate între proiectul desenat și spațiul construit, prin decizii urmărite atent până la final.",
+    items: ["Alinierea temei cu bugetul", "Cereri și comparații de oferte", "Mostre și aprobări de materiale", "Clarificări pentru executanți", "Vizite și verificări de șantier", "Direcție pentru amenajarea finală"],
+  },
+];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Arhitectură, design interior și mobilier custom",
+  description: "Servicii de arhitectură, design interior, renovare și mobilier custom în București și în România.",
+  provider: { "@id": "https://www.sector0studio.com/#studio" },
+  areaServed: ["București", "România", "Europa"],
+  serviceType: ["Arhitectură", "Design interior", "Amenajări interioare", "Mobilier custom", "Renovări"],
+};
+---
+
+<BaseLayout
+  lang="ro"
+  ogLocale="ro_RO"
+  title="Arhitectură, Design Interior și Mobilier Custom | Sector 0"
+  description="Studio de arhitectură și design interior în București. Proiecte complete pentru case, apartamente, renovări și mobilier custom, de la concept la execuție."
+  schema={serviceSchema}
+  alternateLanguages={[
+    { hreflang: "ro", href: "/ro/servicii/" },
+    { hreflang: "en", href: "/services/" },
+    { hreflang: "x-default", href: "/services/" },
+  ]}
+>
+  <main class="page-shell services-page">
+    <header class="page-hero page-hero--services section-pad">
+      <p class="eyebrow">Servicii / București</p>
+      <h1>Arhitectură, design interior și <em>mobilier custom.</em></h1>
+      <p>Sector 0 este un studio independent din București. Dezvoltăm proiecte coerente, de la prima schiță până la detaliile care ajung efectiv în șantier și producție.</p>
+    </header>
+
+    <section class="services-list section-pad" aria-label="Servicii de arhitectură și design interior">
+      {services.map((service) => (
+        <div class="reveal service">
+          <span class="service__index">{service.index}</span>
+          <div class="service__intro"><h2>{service.title}</h2><p>{service.lead}</p></div>
+          <ul>{service.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="ro-services-copy section-pad">
+      <div class="reveal ro-services-copy__intro">
+        <p class="eyebrow">Un proiect, o singură logică</p>
+        <h2>Designul bun nu se oprește la imagine.</h2>
+      </div>
+      <div class="ro-services-copy__grid">
+        <article class="reveal">
+          <h3>Cum începe un proiect?</h3>
+          <p>Începem cu o discuție despre spațiu, nevoi, buget și calendar. Pentru un apartament sau o casă existentă analizăm planurile, releveul și limitările tehnice. Pentru arhitectură nouă evaluăm terenul, reglementările și scenariile posibile. Pe această bază definim clar etapele, livrabilele și onorariul.</p>
+        </article>
+        <article class="reveal" style="transition-delay:70ms">
+          <h3>Ce înseamnă un proiect complet?</h3>
+          <p>Un proiect complet de design interior include organizarea spațiului, conceptul, materialele, iluminatul, mobilierul, obiectele sanitare și toate desenele tehnice necesare execuției. Mobilierul custom este tratat ca parte din arhitectură, nu ca un element adăugat la final. Detaliile sunt coordonate cu producătorii și cu celelalte specialități.</p>
+        </article>
+        <article class="reveal" style="transition-delay:140ms">
+          <h3>Unde lucrăm?</h3>
+          <p>Studioul este bazat în București și lucrează în principal la proiecte rezidențiale în București și în România, cu posibilitatea de colaborare pentru proiecte selectate în Europa. Structura restrânsă a studioului păstrează comunicarea directă și implicarea arhitectului în deciziile importante ale fiecărei etape.</p>
+        </article>
+      </div>
+      <div class="reveal ro-services-copy__cta">
+        <p>Dacă pregătești o casă, o renovare, un apartament sau mobilier realizat la comandă, trimite-ne câteva informații despre proiect.</p>
+        <a href="/contact" class="text-link">Discută cu studioul <Icon name="arrow-right" /></a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

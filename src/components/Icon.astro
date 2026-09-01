@@ -5,6 +5,7 @@ const aria = label ? { role: "img", "aria-label": label } : { "aria-hidden": "tr
 
 <svg {...aria} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
   {name === "arrow-right" && <><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></>}
+  {name === "arrow-left" && <><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></>}
   {name === "arrow-up-right" && <><path d="M7 17 17 7"/><path d="M7 7h10v10"/></>}
   {name === "arrow-down-right" && <><path d="m7 7 10 10"/><path d="M17 7v10H7"/></>}
   {name === "arrow-down" && <><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></>}
