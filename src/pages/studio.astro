@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<BaseLayout title="Studio — Sector 0 Studio" description="Sector 0 Studio and its founder, architect Andi Dumitru.">
+  <main class="page-shell">
+    <header class="studio-hero section-pad">
+      <div><p class="eyebrow">Sector 0 / The studio</p><h1>A point of origin for <em>considered spaces.</em></h1></div>
+      <p>Every commission begins before style: with a clear reading of place, people, constraints and possibility.</p>
+    </header>
+
+    <section class="studio-definition section-pad">
+      <div class="reveal studio-definition__mark">S/0</div>
+      <div class="reveal studio-definition__copy">
+        <p class="eyebrow">What the name means</p>
+        <h2>Sector 0 refers to the moment a project is defined — before form, before material, before the first line becomes fixed.</h2>
+        <p>We resolve projects through plan, proportion and material. Spatial layout establishes the logic. Details are defined before execution. The result is not a fixed house style, but an architecture specific to its context and to the people who will inhabit it.</p>
+      </div>
+    </section>
+
+    <section class="founder section-pad">
+      <div class="reveal founder__portrait"><img src="/images/Andi Dumitru2.jpg" alt="Portrait of architect Andi Dumitru" /><p>Andi Dumitru · Founder / Architect</p></div>
+      <div class="reveal founder__bio" style="transition-delay:90ms">
+        <p class="eyebrow">Architect / OAR right of signature</p>
+        <h2>An independent practice built through careful work and close collaboration.</h2>
+        <p>Sector 0 Studio was founded by Andi Dumitru, an architect with the right of signature in Romania. He studied architecture in the United Kingdom and Milan and gained professional experience in Romania, the UK and Italy before establishing the studio in Bucharest.</p>
+        <p>The practice is currently led directly by Andi and works with specialist collaborators depending on the needs of each commission. This small structure keeps communication clear and allows close attention to design, documentation and site coordination.</p>
+        <a href="/contact" class="text-link">Start a conversation <Icon name="arrow-right" /></a>
+      </div>
+    </section>
+
+    <section class="principles section-pad">
+      <p class="eyebrow">Operating principles</p>
+      <div class="principles__grid">
+        {[
+          ["01", "Clarity before effect", "A project must first work — spatially, technically and financially."],
+          ["02", "Material with purpose", "Every finish is chosen for touch, light, ageing and construction logic."],
+          ["03", "Detail is architecture", "The idea survives only when the junctions, drawings and site decisions are resolved."],
+        ].map(([number, title, copy], index) => (
+          <div class="reveal principle" style={`transition-delay:${index * 70}ms`}><span>{number}</span><h3>{title}</h3><p>{copy}</p></div>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

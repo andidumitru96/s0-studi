@@ -1,0 +1,16 @@
+---
+import Icon from "./Icon.astro";
+const { project, index, className = "" } = Astro.props;
+---
+
+<article class:list={["project-card", className]}>
+  <a href={`/projects/${project.slug}`} class="project-card__image">
+    <img src={project.cover} alt={`${project.title}, ${project.discipline.toLowerCase()} in ${project.location}`} loading="lazy" decoding="async" />
+    <span class="project-card__view">View project <Icon name="arrow-up-right" /></span>
+  </a>
+  <div class="project-card__meta">
+    <span>0{index + 1}</span>
+    <div><h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3><p>{project.location} · {project.year}</p></div>
+    <p>{project.discipline}</p>
+  </div>
+</article>

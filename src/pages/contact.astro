@@ -1,64 +1,92 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
 ---
 
-<BaseLayout title="Contact — s_0 studio">
+<BaseLayout title="Contact — Sector 0 Studio" description="Start an architecture or interior design project with Sector 0 Studio.">
+  <main class="page-shell contact-page">
+    <header class="contact-hero section-pad">
+      <p class="eyebrow">New commissions</p>
+      <h1>Tell us what you want to <em>make possible.</em></h1>
+      <div class="contact-hero__details">
+        <p>We review each enquiry personally and usually respond within two working days.</p>
+        <div class="contact-links">
+          <a href="mailto:info@sector0studio.com">info@sector0studio.com</a>
+          <a href="tel:+40770644501">+40 770 644 501</a>
+          <a href="https://www.instagram.com/sector0studio/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://wa.me/40770644501" target="_blank" rel="noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </header>
 
-<section>
-  <h1>Contact</h1>
-<p>
+    <form class="project-brief section-pad" data-project-brief>
+      <div class="project-brief__heading"><p class="eyebrow">Project brief / 01</p><h2>Start with the essentials.</h2></div>
+      <fieldset class="project-brief__choice" data-choice="projectType">
+        <legend>What are you planning?</legend>
+        <div>
+          {['Interior', 'Architecture', 'Renovation', 'Other'].map((type, index) => <button type="button" class:list={[index === 0 && 'is-selected']} aria-pressed={index === 0 ? 'true' : 'false'} data-value={type}>{type}</button>)}
+        </div>
+      </fieldset>
+      <div class="project-brief__fields">
+        <div class="field"><label for="name">Name *</label><input id="name" name="name" autocomplete="name" required placeholder="Your name" /></div>
+        <div class="field"><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@email.com" /></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+40" /></div>
+        <div class="field"><label for="location">Project location</label><input id="location" name="location" placeholder="City / country" /></div>
+      </div>
+      <fieldset class="project-brief__choice" data-choice="budget">
+        <legend>Indicative construction / fit-out investment</legend>
+        <div>
+          {['€25–50k', '€50–100k', '€100–250k', '€250k+'].map((range, index) => <button type="button" class:list={[index === 1 && 'is-selected']} aria-pressed={index === 1 ? 'true' : 'false'} data-value={range}>{range}</button>)}
+        </div>
+      </fieldset>
+      <div class="field project-brief__message"><label for="message">A few words about the project *</label><textarea id="message" name="message" required rows="6" placeholder="What are you hoping to create, and when would you like to begin?"></textarea></div>
+      <button type="submit" class="brief-submit">Prepare enquiry <Icon name="arrow-right" /></button>
+      <p class="project-brief__privacy">Your details are used only to respond to this project enquiry.</p>
+    </form>
 
-</p>
-  <p>
-  Email:
-  <a href="mailto:info@sector0studio.com">
-    info@sector0studio.com
-  </a>
-</p>
-  <p>Phone: +40 770 644 501</p>
-
-  <p>
-    WhatsApp:
-    <a href="https://wa.me/40770644501" target="_blank" rel="noopener">
-      +40 770 644 501
-    </a>
-  </p>
-
-  <p>
-    <a
-      href="https://www.instagram.com/sector0_studio"
-      target="_blank"
-      rel="noopener"
-    >
-      Instagram
-    </a>
-    ·
-    <a
-      href="https://www.linkedin.com/company/YOUR_COMPANY"
-      target="_blank"
-      rel="noopener"
-    >
-      LinkedIn
-    </a>
-  </p>
-</section>
-
-<section class="map-fullbleed">
-  <div class="map-wrapper">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1424.4402170142855!2d26.093381656858803!3d44.4356147927388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ffe663e18449%3A0x98064f2f1060bc47!2sSector%200%20Studio!5e0!3m2!1sen!2sro!4v1772004300604!5m2!1sen!2sro" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      aria-label="Studio location on map">
-    </iframe>
-  </div>
-</section>
-
+    <section class="brief-success section-pad" data-brief-success hidden aria-live="polite">
+      <span><Icon name="check" /></span>
+      <p class="eyebrow">Your email is ready</p>
+      <h2>Thank you. Your mail app should now be open.</h2>
+      <p>Review the message and send it when ready. If it did not open, write directly to <a href="mailto:info@sector0studio.com">info@sector0studio.com</a>.</p>
+    </section>
+  </main>
 </BaseLayout>
 
-
-
-
-
-
-
-
+<script is:inline>
+  (() => {
+    const form = document.querySelector("[data-project-brief]");
+    const success = document.querySelector("[data-brief-success]");
+    if (!form || !success) return;
+    const selected = { projectType: "Interior", budget: "€50–100k" };
+    form.querySelectorAll("[data-choice]").forEach((group) => {
+      const name = group.dataset.choice;
+      group.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
+        selected[name] = button.dataset.value;
+        group.querySelectorAll("button").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-selected", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+      }));
+    });
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const body = [
+        `Name: ${data.get("name")}`,
+        `Email: ${data.get("email")}`,
+        `Phone: ${data.get("phone") || "—"}`,
+        `Project type: ${selected.projectType}`,
+        `Indicative investment: ${selected.budget}`,
+        `Location: ${data.get("location") || "—"}`,
+        "",
+        String(data.get("message")),
+      ].join("\n");
+      window.location.href = `mailto:info@sector0studio.com?subject=${encodeURIComponent("New project enquiry")}&body=${encodeURIComponent(body)}`;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  })();
+</script>

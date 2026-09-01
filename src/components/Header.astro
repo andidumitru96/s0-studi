@@ -1,0 +1,66 @@
+---
+import Icon from "./Icon.astro";
+
+const pathname = Astro.url.pathname;
+const beginsOnImage = pathname === "/" || pathname.startsWith("/projects/");
+const navigation = [
+  { href: "/work", label: "Work", index: "01" },
+  { href: "/studio", label: "Studio", index: "02" },
+  { href: "/services", label: "Services", index: "03" },
+  { href: "/contact", label: "Contact", index: "04" },
+];
+---
+
+<header class:list={["site-header", beginsOnImage ? "site-header--inverse" : "site-header--solid"]} data-site-header data-begins-on-image={beginsOnImage ? "true" : "false"}>
+  <a href="/" class="brand-mark" aria-label="Sector 0 Studio home">
+    <span class="brand-mark__slash">/</span><span>S</span><span class="brand-mark__zero">0</span>
+  </a>
+  <p class="site-header__discipline">Architecture + Interior Design</p>
+  <nav class="site-nav" aria-label="Primary navigation">
+    {navigation.map((item) => <a href={item.href} class:list={[pathname === item.href && "is-active"]}>{item.label}</a>)}
+  </nav>
+  <button type="button" class="menu-trigger" data-menu-open aria-label="Open navigation" aria-expanded="false"><Icon name="menu" /></button>
+  <div class="site-menu__backdrop" data-menu-backdrop></div>
+  <aside class="site-menu" data-site-menu aria-hidden="true" aria-label="Mobile navigation">
+    <button type="button" class="site-menu__close" data-menu-close aria-label="Close navigation"><Icon name="close" /></button>
+    <div class="site-menu__topline"><span>Sector 0 Studio</span><span>Bucharest · Europe</span></div>
+    <nav class="site-menu__nav">
+      {navigation.map((item) => <a href={item.href}><span>{item.index}</span>{item.label}</a>)}
+    </nav>
+    <div class="site-menu__footer">
+      <a href="mailto:info@sector0studio.com">info@sector0studio.com</a>
+      <a href="tel:+40770644501">+40 770 644 501</a>
+    </div>
+  </aside>
+</header>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector("[data-site-header]");
+    const menu = document.querySelector("[data-site-menu]");
+    const openButton = document.querySelector("[data-menu-open]");
+    const closeButton = document.querySelector("[data-menu-close]");
+    const backdrop = document.querySelector("[data-menu-backdrop]");
+    if (!header || !menu || !openButton || !closeButton || !backdrop) return;
+    const updateHeader = () => {
+      const inverse = header.dataset.beginsOnImage === "true" && window.scrollY <= 72;
+      header.classList.toggle("site-header--inverse", inverse);
+      header.classList.toggle("site-header--solid", !inverse);
+    };
+    const setMenu = (open) => {
+      menu.classList.toggle("is-open", open);
+      backdrop.classList.toggle("is-open", open);
+      menu.setAttribute("aria-hidden", String(!open));
+      openButton.setAttribute("aria-expanded", String(open));
+      document.body.classList.toggle("menu-open", open);
+      if (open) closeButton.focus();
+    };
+    openButton.addEventListener("click", () => setMenu(true));
+    closeButton.addEventListener("click", () => setMenu(false));
+    backdrop.addEventListener("click", () => setMenu(false));
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (event) => event.key === "Escape" && setMenu(false));
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    updateHeader();
+  })();
+</script>

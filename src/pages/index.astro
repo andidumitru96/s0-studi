@@ -1,62 +1,134 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import Icon from "../components/Icon.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects.js";
 
-const projects = (await getCollection("projects"))
-  .filter(p => p.data.featured)
-  .sort((a, b) =>
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  );
+const featured = projects.slice(0, 3);
 ---
 
-<BaseLayout title="s_0 studio">
-<section>
-  <h1>
-  Sector_0 studio<br />
-  Architecture & Interior Design
-</h1>
-
-  <p>
-   Projects defined by clarity, proportion, and control — from concept to execution.
-  </p>
-</section>
-
-<section>
-  <h2>London - Milan - Bucharest</h2>
-
-  <div class="project-grid">
-    {projects.map(project => (
-      <a href={`/projects/${project.slug}`} class="project-card reveal">
-        <div class="project-image-wrapper">
-          <img src={project.data.images[0]} alt={project.data.title} />
+<BaseLayout>
+  <main>
+    <section class="hero" aria-label="Featured projects" data-hero data-featured={JSON.stringify(featured.map(({ slug, title, year, discipline }) => ({ slug, title, year, discipline })))}>
+      <div class="hero__media" aria-hidden="true">
+        {featured.map((project, index) => (
+          <img src={project.cover} alt="" class:list={[index === 0 && "is-active"]} fetchpriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+        ))}
+      </div>
+      <div class="hero__veil"></div>
+      <div class="hero__location">Bucharest · Romania · Europe</div>
+      <div class="hero__edition">Independent studio / Est. 2024</div>
+      <div class="hero__identity"><p>Sector</p><p>Zero</p></div>
+      <div class="hero__project" aria-live="polite">
+        <p class="hero__project-meta" data-hero-meta>{featured[0].discipline} · {featured[0].year}</p>
+        <a href={`/projects/${featured[0].slug}`} data-hero-link><span data-hero-title>{featured[0].title}</span><Icon name="arrow-down-right" /></a>
+      </div>
+      <div class="hero__controls">
+        <div class="hero__indexes" aria-label="Select featured project">
+          {featured.map((project, index) => (
+            <button type="button" class:list={[index === 0 && "is-active"]} data-hero-index={index} aria-label={`Show ${project.title}`} aria-current={index === 0 ? "true" : undefined}>0{index + 1}</button>
+          ))}
         </div>
-        <h3>{project.data.title}</h3>
-        <p>{project.data.year}</p>
-      </a>
-    ))}
-  </div>
-</section>
+        <button type="button" class="hero__pause" data-hero-pause aria-label="Pause slideshow">
+          <span data-pause-icon><Icon name="pause" /></span><span data-play-icon hidden><Icon name="play" /></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="manifesto section-pad">
+      <div class="reveal manifesto__label"><p class="eyebrow">The point of origin</p></div>
+      <div class="reveal manifesto__statement"><h1>Every project begins at <em>zero.</em> Plan, proportion, material and light are resolved as one continuous idea.</h1></div>
+      <div class="reveal manifesto__note" style="transition-delay:100ms">
+        <p>Sector 0 is an independent architecture and interior design studio based in Bucharest, working across residential, commercial and research-led projects.</p>
+        <a href="/studio" class="text-link">Discover the studio <Icon name="arrow-right" /></a>
+      </div>
+    </section>
+
+    <section class="selected-work section-pad">
+      <div class="section-heading">
+        <p class="eyebrow">Selected work · 2025—2026</p>
+        <a href="/work" class="text-link">View all projects <Icon name="arrow-right" /></a>
+      </div>
+      <div class="selected-work__grid">
+        {projects.slice(0, 4).map((project, index) => (
+          <div class:list={["reveal", index % 2 && "selected-work__offset"]} style={`transition-delay:${(index % 2) * 90}ms`}>
+            <ProjectCard project={project} index={index} />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="approach section-pad">
+      <div class="reveal approach__intro"><p class="eyebrow">A controlled process</p><h2>One clear line from first conversation to finished space.</h2></div>
+      <div class="approach__steps">
+        {[
+          ["01", "Define", "Context, ambition, constraints and the exact brief."],
+          ["02", "Resolve", "Plan, proportion and atmosphere developed as one system."],
+          ["03", "Detail", "Materials, lighting, joinery and technical coordination."],
+          ["04", "Deliver", "Documentation, procurement guidance and site continuity."],
+        ].map(([number, title, copy], index) => (
+          <div class="reveal approach__step" style={`transition-delay:${index * 70}ms`}><span>{number}</span><h3>{title}</h3><p>{copy}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="founder-preview section-pad">
+      <div class="reveal founder-preview__image"><img src="/images/Andi Dumitru2.jpg" alt="Andi Dumitru, founder and architect at Sector 0 Studio" loading="lazy" /></div>
+      <div class="reveal founder-preview__copy" style="transition-delay:100ms">
+        <p class="eyebrow">Andi Dumitru / Architect</p>
+        <h2>A small practice, closely involved in every project.</h2>
+        <p>Sector 0 is currently led by Andi Dumitru as an independent practice. Specialist collaborators are brought in when the scale or technical needs of a project require them, while design and communication remain direct.</p>
+        <a href="/studio" class="text-link">Meet Andi Dumitru <Icon name="arrow-right" /></a>
+      </div>
+    </section>
+  </main>
 </BaseLayout>
 
-<style>
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 48px;
-}
+<script is:inline>
+  (() => {
+    const hero = document.querySelector("[data-hero]");
+    if (!hero) return;
+    const featured = JSON.parse(hero.dataset.featured || "[]");
+    const images = [...hero.querySelectorAll(".hero__media img")];
+    const buttons = [...hero.querySelectorAll("[data-hero-index]")];
+    const meta = hero.querySelector("[data-hero-meta]");
+    const title = hero.querySelector("[data-hero-title]");
+    const link = hero.querySelector("[data-hero-link]");
+    const pauseButton = hero.querySelector("[data-hero-pause]");
+    const pauseIcon = hero.querySelector("[data-pause-icon]");
+    const playIcon = hero.querySelector("[data-play-icon]");
+    let active = 0;
+    let paused = false;
+    let timer;
 
-.project-image-wrapper {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  margin-bottom: 12px;
-}
+    const show = (index) => {
+      active = index;
+      images.forEach((image, itemIndex) => image.classList.toggle("is-active", itemIndex === index));
+      buttons.forEach((button, itemIndex) => {
+        button.classList.toggle("is-active", itemIndex === index);
+        if (itemIndex === index) button.setAttribute("aria-current", "true");
+        else button.removeAttribute("aria-current");
+      });
+      const project = featured[index];
+      meta.textContent = `${project.discipline} · ${project.year}`;
+      title.textContent = project.title;
+      link.href = `/projects/${project.slug}`;
+    };
 
-.project-card img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
+    const start = () => {
+      window.clearInterval(timer);
+      if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      timer = window.setInterval(() => show((active + 1) % featured.length), 6500);
+    };
 
-</style>
+    buttons.forEach((button, index) => button.addEventListener("click", () => { show(index); start(); }));
+    pauseButton.addEventListener("click", () => {
+      paused = !paused;
+      pauseButton.setAttribute("aria-label", paused ? "Play slideshow" : "Pause slideshow");
+      pauseIcon.hidden = paused;
+      playIcon.hidden = !paused;
+      start();
+    });
+    start();
+  })();
+</script>

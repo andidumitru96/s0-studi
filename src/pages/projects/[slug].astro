@@ -1,39 +1,52 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import Icon from "../../components/Icon.astro";
+import { projects } from "../../data/projects.js";
 
-export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map(project => ({
-    params: { slug: project.slug },
-    props: { project }
-  }));
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
 
 const { project } = Astro.props;
+const currentIndex = projects.findIndex((item) => item.slug === project.slug);
+const nextProject = projects[(currentIndex + 1) % projects.length];
+const title = `${project.title} — Sector 0 Studio`;
+const description = `${project.statement} ${project.location}, ${project.year}.`;
 ---
 
-<BaseLayout title={`${project.data.title} — s_0 studio`}>
+<BaseLayout title={title} description={description} image={project.cover}>
+  <main class="project-page">
+    <header class="project-hero">
+      <img src={project.cover} alt={`${project.title} hero interior`} fetchpriority="high" />
+      <div class="project-hero__veil"></div>
+      <div class="project-hero__title"><p>{project.discipline} · {project.location}</p><h1>{project.title}</h1></div>
+      <div class="project-hero__year">{project.year}</div>
+      <a href="#project-intro" class="project-hero__scroll">Explore <Icon name="arrow-down" /></a>
+    </header>
 
-<section>
-  <figure class="reveal">
-    <img src={project.data.images[0]} alt={project.data.title} />
-  </figure>
+    <section id="project-intro" class="project-intro section-pad">
+      <div class="reveal"><p class="eyebrow">Project / 0{currentIndex + 1}</p><h2>{project.statement}</h2></div>
+      <div class="reveal project-intro__details" style="transition-delay:80ms">
+        <div><p>Location</p><p>{project.location}</p></div>
+        <div><p>Year</p><p>{project.year}</p></div>
+        <div><p>Discipline</p><p>{project.discipline}</p></div>
+      </div>
+      <div class="reveal project-intro__text" style="transition-delay:120ms"><p>{project.description}</p></div>
+    </section>
 
-  <h1>{project.data.title}</h1>
-  <p>{project.data.year} · {project.data.location}</p>
+    <section class="project-gallery section-pad" aria-label={`${project.title} image gallery`}>
+      {project.images.map((image, index) => (
+        <div class:list={["reveal", "project-gallery__item", `project-gallery__item--${index % 5}`]}>
+          <img src={image} alt={`${project.title} — interior view ${index + 1}`} loading={index < 2 ? "eager" : "lazy"} decoding="async" />
+          <span>0{index + 1}</span>
+        </div>
+      ))}
+    </section>
 
-  <p style="margin-top: 32px; max-width: 60ch;">
-    {project.body}
-  </p>
-</section>
-
-{project.data.images.slice(1).map(image => (
-  <section>
-    <figure class="reveal">
-      <img src={image} alt="" />
-    </figure>
-  </section>
-))}
-
+    <section class="next-project section-pad">
+      <p class="eyebrow">Next project</p>
+      <a href={`/projects/${nextProject.slug}`}><span>{nextProject.title}</span><Icon name="arrow-up-right" /></a>
+      <div class="next-project__image"><img src={nextProject.cover} alt="" loading="lazy" /></div>
+    </section>
+  </main>
 </BaseLayout>

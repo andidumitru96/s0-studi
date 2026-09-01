@@ -1,79 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
-
-const projects = (await getCollection("projects"))
-  .sort((a, b) =>
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  );
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects.js";
 ---
 
-<BaseLayout title="Work — s_0 studio">
-<section>
-  <h1>Selected works</h1>
-</section>
-
-<section>
-  <div class="project-grid">
-    {projects.map(project => (
-      <a href={`/projects/${project.slug}`} class="project-card reveal">
-        <div class="card-image">
-          <img src={project.data.images[0]} alt={project.data.title} />
-        </div>
-        <h3>{project.data.title}</h3>
-        <p>{project.data.year}</p>
-      </a>
-    ))}
-  </div>
-</section>
+<BaseLayout title="Selected Work — Sector 0 Studio" description="Selected residential architecture and interior projects by Sector 0 Studio.">
+  <main class="page-shell">
+    <header class="page-hero page-hero--work section-pad">
+      <p class="eyebrow">Archive / 2025—2026</p>
+      <h1>Selected<br /><em>work.</em></h1>
+      <p>Residential interiors developed through plan, proportion, material and a precise control of atmosphere.</p>
+    </header>
+    <section class="work-index section-pad" aria-label="Project index">
+      {projects.map((project, index) => <div class="reveal"><ProjectCard project={project} index={index} /></div>)}
+    </section>
+  </main>
 </BaseLayout>
-
-<style>
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 48px;
-}
-
-.project-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-}
-
-.card-image {
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-@media (min-width: 769px) {
-  .project-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .card-image {
-    aspect-ratio: 3 / 2;
-  }
-
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-@media (max-width: 768px) {
-  .card-image {
-    aspect-ratio: auto;
-  }
-}
-</style>

@@ -1,75 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+
+const services = [
+  {
+    index: "01",
+    title: "Interior architecture",
+    lead: "Complete spatial and material design for homes, apartments and selective commercial spaces.",
+    items: ["Brief and spatial strategy", "Concept design and layouts", "Material, lighting and furniture direction", "Photorealistic visualisation", "Custom joinery and furniture drawings", "Full technical documentation"],
+  },
+  {
+    index: "02",
+    title: "Architecture",
+    lead: "Context-led architecture balancing ambition, regulation and construction logic.",
+    items: ["Site analysis and feasibility", "Concept and volumetric studies", "Planning and permitting support", "Technical design and execution details", "Consultant coordination", "Construction-stage support"],
+  },
+  {
+    index: "03",
+    title: "Direction & delivery",
+    lead: "Continuity between the design on paper and the space that is ultimately built.",
+    items: ["Budget and scope alignment", "Supplier and maker coordination", "Material sampling and approvals", "Procurement guidance", "Site reviews and design clarifications", "Final styling direction"],
+  },
+];
 ---
 
-<BaseLayout title="Services — s_0 studio">
-
-<section>
-  <h1>Services</h1>
-  <p>
-    We provide architectural and interior design services across
-    residential, commercial, and research-driven projects, guiding
-    each commission from concept to execution.
-  </p>
-</section>
-
-<section>
-  <h2>Interior Design </h2>
-  <p>
-    Our interior design process is structured and transparent, covering
-    both creative direction and technical coordination.
-  </p>
-
-  <ul class="service-list">
-    <li>Initial consultation and brief definition</li>
-    <li>Concept development and spatial layout</li>
-    <li>Moodboards, material and furniture selection</li>
-    <li>3D visualizations and renderings</li>
-    <li>Furniture plans and custom furniture drawings</li>
-    <li>Lighting, electrical, and MEP coordination</li>
-    <li>Complete technical drawing set for execution</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Architecture</h2>
-  <p>
-    We approach architecture as a precise and contextual process,
-    balancing concept, regulation, and construction logic.
-  </p>
-
-  <ul class="service-list">
-    <li>Site analysis and feasibility studies</li>
-    <li>Concept design and volumetric studies</li>
-    <li>Planning documentation and permitting support</li>
-    <li>Detailed technical drawings</li>
-    <li>Coordination with structural and engineering consultants</li>
-    <li>Execution details and construction support</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Project Scope and Fees</h2>
-
-  <p>    Projects are priced based on size, complexity, and level of involvement.
-Most interior projects involve full apartment design and technical documentation.
-Fees are aligned with the scope required to develop the project to execution level.
-  </p>
-</section>
-
-<section>
-
-  <h2>Let’s work together</h2>
-
-  <p>
-    Projects are considered based on scope and alignment.
-  </p>
-
-  <a href="/contact" class="cta-button">
-    Get in touch
-  </a>
-</section>
-
+<BaseLayout title="Services — Sector 0 Studio" description="Architecture and interior design services from concept through execution.">
+  <main class="page-shell services-page">
+    <header class="page-hero page-hero--services section-pad">
+      <p class="eyebrow">What we do</p>
+      <h1>From the first question to the <em>final detail.</em></h1>
+      <p>Architectural and interior design services structured around one objective: preserving the quality of the idea through execution.</p>
+    </header>
+    <section class="services-list section-pad">
+      {services.map((service) => (
+        <div class="reveal service">
+          <span class="service__index">{service.index}</span>
+          <div class="service__intro"><h2>{service.title}</h2><p>{service.lead}</p></div>
+          <ul>{service.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      ))}
+    </section>
+    <section class="fees section-pad">
+      <div class="reveal"><p class="eyebrow">Scope + fees</p><h2>Every proposal is built around the actual project.</h2></div>
+      <div class="reveal" style="transition-delay:80ms"><p>Fees are based on size, complexity, timeline and level of involvement. After an initial conversation, we define the scope, deliverables, phases and fee in one clear proposal.</p><a href="/contact" class="text-link">Tell us about your project <Icon name="arrow-right" /></a></div>
+    </section>
+  </main>
 </BaseLayout>
-
-
