@@ -12,10 +12,12 @@ const {
   ogLocale = lang === "ro" ? "ro_RO" : "en_GB",
   alternateLanguages = [],
   schema,
+  noindex = false,
 } = Astro.props;
 
 const site = "https://www.sector0studio.com";
-const canonical = new URL(Astro.url.pathname, site).href;
+const pathname = Astro.url.pathname;
+const canonical = new URL(pathname.endsWith("/") ? pathname : `${pathname}/`, site).href;
 const socialImage = new URL(image, site).href;
 const studioSchema = {
   "@context": "https://schema.org",
@@ -25,7 +27,7 @@ const studioSchema = {
   url: site,
   image: `${site}/og.png`,
   logo: `${site}/favicon.svg`,
-  description: "Independent architecture and interior design studio in Bucharest, Romania.",
+  description: lang === "ro" ? "Studio independent de arhitectură, design interior și proiectare mobilier custom în București, condus de arhitect Andi Dumitru." : "Independent architecture, interior design and custom furniture design studio in Bucharest, Romania.",
   email: "info@sector0studio.com",
   telephone: "+40 770 644 501",
   address: {
@@ -33,12 +35,13 @@ const studioSchema = {
     addressLocality: "Bucharest",
     addressCountry: "RO",
   },
-  areaServed: ["Bucharest", "Romania", "Europe"],
-  sameAs: ["https://www.instagram.com/sector0studio/"],
+  areaServed: ["Bucharest", "Ilfov", "Romania"],
+  sameAs: ["https://www.instagram.com/sector0_studio/"],
   founder: {
     "@type": "Person",
+    "@id": `${site}/studio/#andi-dumitru`,
     name: "Andi Dumitru",
-    jobTitle: "Architect",
+    jobTitle: lang === "ro" ? "Arhitect cu drept de semnătură" : "Architect",
   },
   knowsAbout: [
     "Architecture",
@@ -49,7 +52,7 @@ const studioSchema = {
     "Custom joinery",
   ],
 };
-const structuredData = schema ? [studioSchema, schema] : studioSchema;
+const structuredData = [studioSchema, ...(Array.isArray(schema) ? schema : schema ? [schema] : [])];
 ---
 
 <!doctype html>
@@ -61,9 +64,9 @@ const structuredData = schema ? [studioSchema, schema] : studioSchema;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Sector 0 Studio" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
     <meta name="theme-color" content="#e9e5dc" />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     {alternateLanguages.map(({ hreflang, href }) => <link rel="alternate" hreflang={hreflang} href={new URL(href, site).href} />)}
     {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -78,13 +81,13 @@ const structuredData = schema ? [studioSchema, schema] : studioSchema;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")} />}
     <script is:inline>document.documentElement.classList.remove("no-js"); document.documentElement.classList.add("js");</script>
   </head>
   <body>
-    <Header />
+    <Header lang={lang} />
     <slot />
-    <Footer />
+    <Footer lang={lang} />
     <script is:inline>
       (() => {
         const elements = document.querySelectorAll(".reveal");

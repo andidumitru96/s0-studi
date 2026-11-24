@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceLinks from "../components/ServiceLinks.astro";
 import Icon from "../components/Icon.astro";
 
 const services = [
@@ -45,6 +46,7 @@ const services = [
       <h1>From the first question to the <em>final detail.</em></h1>
       <p>Architectural and interior design services structured around one objective: preserving the quality of the idea through execution.</p>
     </header>
+    <ServiceLinks lang="en" />
     <section class="services-list section-pad">
       {services.map((service) => (
         <div class="reveal service">

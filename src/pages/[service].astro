@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceLinks from "../components/ServiceLinks.astro";
+import { services } from "../data/services.js";
+import { projects } from "../data/projects.js";
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { service: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const selectedProjects = service.projects.map((slug) => projects.find((project) => project.slug === slug));
+const url = `https://www.sector0studio.com/${service.slug}/`;
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: service.label,
+    url,
+    description: service.description,
+    serviceType: service.label,
+    provider: { "@id": "https://www.sector0studio.com/#studio" },
+    areaServed: [
+      { "@type": "City", name: "București" },
+      { "@type": "AdministrativeArea", name: "Ilfov" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Sector 0 Studio", item: "https://www.sector0studio.com/" },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: "https://www.sector0studio.com/ro/servicii/" },
+      { "@type": "ListItem", position: 3, name: service.label, item: url },
+    ],
+  },
+];
+---
+
+<BaseLayout lang="ro" title={service.title} description={service.description} image={service.image} preloadImage={service.image} schema={schema}>
+  <main class="page-shell service-detail">
+    <header class="service-detail__hero section-pad">
+      <nav class="service-detail__breadcrumbs" aria-label="Traseu de navigare"><a href="/">Sector 0</a><span>/</span><a href="/ro/servicii/">Servicii</a></nav>
+      <div class="service-detail__hero-grid">
+        <div><p class="eyebrow">{service.eyebrow}</p><h1>{service.heading}</h1></div>
+        <div class="service-detail__lead"><p>{service.lead}</p><a class="service-detail__link" href="#discutam">Discută proiectul tău</a></div>
+      </div>
+      <figure class:list={["service-detail__image", service.portrait && "service-detail__image--portrait"]}>
+        <img src={service.image} alt={service.imageAlt} fetchpriority="high" decoding="async" />
+        <figcaption>{service.imageAlt}</figcaption>
+      </figure>
+    </header>
+
+    <section class="service-detail__section service-detail__intro section-pad" aria-labelledby="intro-title">
+      <h2 id="intro-title">{service.introTitle}</h2>
+      <div class="service-detail__copy">{service.intro.map((paragraph) => <p>{paragraph}</p>)}</div>
+    </section>
+
+    <section class="service-detail__section service-detail__scope section-pad" aria-labelledby="scope-title">
+      <h2 id="scope-title">{service.deliverablesTitle}</h2>
+      <div><ul>{service.deliverables.map((item) => <li>{item}</li>)}</ul><p class="service-detail__note">Conținutul și etapele se stabilesc pentru fiecare proiect, în ofertă și contract.</p></div>
+    </section>
+
+    <section class="service-detail__process section-pad" aria-labelledby="process-title">
+      <p class="eyebrow">Procesul de lucru</p><h2 id="process-title">Decizii clare, etapă cu etapă.</h2>
+      <div class="service-detail__steps">{service.steps.map((step) => <article><h3>{step.title}</h3><p>{step.text}</p></article>)}</div>
+    </section>
+
+    <section class="service-detail__section section-pad" aria-labelledby="focus-title">
+      <h2 id="focus-title">{service.focusTitle}</h2>
+      <div class="service-detail__copy">{service.focus.map((paragraph) => <p>{paragraph}</p>)}</div>
+    </section>
+
+    <section class="service-detail__work section-pad" aria-labelledby="work-title">
+      <div class="service-detail__work-heading"><h2 id="work-title">{service.workHeading}</h2><a class="service-detail__link" href="/work/">Vezi portofoliul</a></div>
+      <div class="service-detail__projects">{selectedProjects.map((project) => (
+        <article><a href={`/projects/${project.slug}/`}><img src={project.cover} alt={`${project.title} — amenajare interioară, București`} loading="lazy" decoding="async" /><h3>{project.title}</h3><p>Design interior · București</p></a></article>
+      ))}</div>
+    </section>
+
+    <section class="service-detail__section service-detail__faq section-pad" aria-labelledby="faq-title">
+      <h2 id="faq-title">Întrebări frecvente</h2>
+      <div>{service.faq.map((item) => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div>
+    </section>
+
+    <section id="discutam" class="service-detail__section service-detail__contact section-pad" aria-labelledby="contact-title">
+      <div><p class="eyebrow">Primul pas</p><h2 id="contact-title">Povestește-ne despre proiect.</h2></div>
+      <div class="service-detail__copy"><p>{service.brief}</p><div class="service-detail__contact-links"><a href="mailto:info@sector0studio.com">info@sector0studio.com</a><a href="tel:+40770644501">+40 770 644 501</a></div><p>Andi Dumitru · Sector 0 Studio · București</p></div>
+    </section>
+    <ServiceLinks exclude={service.slug} />
+  </main>
+</BaseLayout>
+
+<style>
+  .service-detail { --detail-gap: clamp(2rem, 6vw, 6rem); }
+  .service-detail :is(h1,h2,h3,p,ul,figure) { margin: 0; }
+  .service-detail .eyebrow { font-size: 0.875rem; letter-spacing: 0.05em; line-height: 1.4; }
+  .service-detail__hero { padding-top: 2rem; padding-bottom: 3rem; }
+  .service-detail__breadcrumbs { display: flex; gap: 0.75rem; font-size: 0.875rem; }
+  .service-detail__breadcrumbs a { text-decoration: underline; text-underline-offset: 0.25em; }
+  .service-detail__hero-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: var(--detail-gap); align-items: end; padding: clamp(3rem,6vw,6rem) 0; }
+  .service-detail h1 { max-width: 13ch; margin-top: 1.5rem; font-size: clamp(3rem, 7.4vw, 7.5rem); font-weight: 450; line-height: 1.02; letter-spacing: -0.065em; overflow-wrap: break-word; }
+  .service-detail__lead { max-width: 40ch; font-size: 1.125rem; line-height: 1.7; }
+  .service-detail__lead p { margin-bottom: 1.5rem; }
+  .service-detail__link { display: inline-block; font-size: 1rem; line-height: 1.5; padding-bottom: 0.3rem; border-bottom: 1px solid currentColor; }
+  .service-detail a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+  .service-detail__image img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
+  .service-detail__image--portrait img { aspect-ratio: 16 / 7; object-position: center 32%; }
+  .service-detail__image figcaption { padding-top: 0.75rem; font-size: 0.875rem; color: var(--ink-soft); }
+  .service-detail__section { display: grid; grid-template-columns: 1fr 1.25fr; gap: var(--detail-gap); padding-top: clamp(4rem,7vw,7rem); padding-bottom: clamp(4rem,7vw,7rem); border-top: 1px solid var(--line); }
+  .service-detail h2 { max-width: 18ch; font-size: clamp(2rem,3.8vw,4rem); font-weight: 450; line-height: 1.1; letter-spacing: -0.045em; }
+  .service-detail__copy { max-width: 65ch; font-size: 1rem; line-height: 1.8; }
+  .service-detail__copy p + p { margin-top: 1.25rem; }
+  .service-detail__scope { background: var(--ink); color: var(--white); }
+  .service-detail__scope ul { padding-left: 1.2rem; }
+  .service-detail__scope li { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); }
+  .service-detail__scope .service-detail__note { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.7; }
+  .service-detail__process { padding-top: clamp(4rem,7vw,7rem); padding-bottom: clamp(4rem,7vw,7rem); }
+  .service-detail__process h2 { max-width: 23ch; margin-top: 1.25rem; }
+  .service-detail__steps { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 2rem; margin-top: 3rem; }
+  .service-detail__steps article { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .service-detail h3 { font-size: 1.35rem; line-height: 1.25; font-weight: 500; letter-spacing: -0.025em; }
+  .service-detail__steps p { margin-top: 1rem; font-size: 1rem; line-height: 1.75; }
+  .service-detail__work { padding-top: 4rem; padding-bottom: 4rem; background: var(--paper-light); }
+  .service-detail__work-heading { display: flex; justify-content: space-between; align-items: end; gap: 2rem; }
+  .service-detail__projects { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .service-detail__projects img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .service-detail__projects h3 { margin-top: 1rem; }
+  .service-detail__projects p { font-size: 0.875rem; margin-top: 0.4rem; }
+  .service-detail__faq details { border-top: 1px solid var(--line); padding: 1.25rem 0; }
+  .service-detail__faq details:last-child { border-bottom: 1px solid var(--line); }
+  .service-detail__faq summary { font-size: 1.125rem; line-height: 1.5; cursor: pointer; }
+  .service-detail__faq details p { margin-top: 1rem; font-size: 1rem; line-height: 1.8; }
+  .service-detail__contact { background: var(--paper-light); scroll-margin-top: 6rem; }
+  .service-detail__contact h2 { margin-top: 1.25rem; }
+  .service-detail__contact-links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; margin: 1.5rem 0; font-size: clamp(1.1rem,2vw,1.5rem); }
+  .service-detail__contact-links a { border-bottom: 1px solid currentColor; overflow-wrap: anywhere; }
+  @media(max-width: 960px) { .service-detail__steps { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+  @media(max-width: 720px) {
+    .service-detail__hero-grid, .service-detail__section { grid-template-columns: minmax(0,1fr); }
+    .service-detail h1 { max-width: 16ch; font-size: clamp(2.8rem,11vw,4.5rem); }
+    .service-detail h2 { max-width: 22ch; }
+    .service-detail__hero-grid { gap: 2rem; }
+    .service-detail__lead { font-size: 1rem; }
+    .service-detail__image img { aspect-ratio: 4 / 3; }
+    .service-detail__image--portrait img { aspect-ratio: 4 / 3; object-position: center 28%; }
+    .service-detail__work-heading { align-items: start; flex-direction: column; }
+    .service-detail__projects { grid-template-columns: minmax(0,1fr); gap: 2.5rem; }
+    .service-detail__steps { grid-template-columns: minmax(0,1fr); }
+  }
+</style>

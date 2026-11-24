@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "seo:notify": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "astro": "^4.0.0"

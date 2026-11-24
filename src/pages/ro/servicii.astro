@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ServiceLinks from "../../components/ServiceLinks.astro";
 import Icon from "../../components/Icon.astro";
 
 const services = [
@@ -56,9 +57,10 @@ const serviceSchema = {
     <header class="page-hero page-hero--services section-pad">
       <p class="eyebrow">Servicii / București</p>
       <h1>Arhitectură, design interior și <em>mobilier custom.</em></h1>
-      <p>Sector 0 este un studio independent din București. Dezvoltăm proiecte coerente, de la prima schiță până la detaliile care ajung efectiv în șantier și producție.</p>
+      <p>Sector 0 este un studio independent din București, condus de Andi Dumitru, arhitect cu drept de semnătură. Proiectăm case, interioare și mobilier custom, de la prima schiță până la detaliile pentru execuție.</p>
     </header>
 
+    <ServiceLinks />
     <section class="services-list section-pad" aria-label="Servicii de arhitectură și design interior">
       {services.map((service) => (
         <div class="reveal service">

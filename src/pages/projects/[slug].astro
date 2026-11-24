@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ServiceLinks from "../../components/ServiceLinks.astro";
 import Icon from "../../components/Icon.astro";
 import { projects } from "../../data/projects.js";
 
@@ -60,6 +61,7 @@ const projectSchema = {
       ))}
     </section>
 
+    <ServiceLinks lang="en" />
     <section class="next-project section-pad">
       <p class="eyebrow">Next project</p>
       <a href={`/projects/${nextProject.slug}`}><span>{nextProject.title}</span><Icon name="arrow-up-right" /></a>

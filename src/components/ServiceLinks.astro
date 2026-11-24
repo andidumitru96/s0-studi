@@ -1,0 +1,24 @@
+---
+import { services } from "../data/services.js";
+const { lang = "ro", exclude } = Astro.props;
+---
+
+<section class="service-links section-pad" aria-label={lang === "ro" ? "Servicii în București" : "Services in Romanian"}>
+  <p class="eyebrow">{lang === "ro" ? "Alege punctul de plecare" : "Explore our services in Romanian"}</p>
+  <div class="service-links__grid">
+    {services.filter((service) => service.slug !== exclude).map((service) => (
+      <a href={`/${service.slug}/`} lang="ro" hreflang="ro">{service.label}</a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .service-links { padding-top: 3rem; padding-bottom: 3rem; border-top: 1px solid var(--line); }
+  .service-links .eyebrow { font-size: 0.875rem; letter-spacing: 0.04em; }
+  .service-links__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+  .service-links__grid a { font-size: clamp(1.1rem, 1.5vw, 1.6rem); line-height: 1.3; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .service-links__grid a:hover { opacity: 0.65; }
+  .service-links__grid a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  @media (max-width: 720px) { .service-links__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } }
+  @media (max-width: 360px) { .service-links__grid { grid-template-columns: 1fr; } }
+</style>

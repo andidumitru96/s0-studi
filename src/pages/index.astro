@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceLinks from "../components/ServiceLinks.astro";
 import Icon from "../components/Icon.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { projects } from "../data/projects.js";
@@ -71,6 +72,8 @@ const featured = projects.slice(0, 3);
         <a href="/services" class="text-link">Explore our services <Icon name="arrow-right" /></a>
       </div>
     </section>
+
+    <ServiceLinks lang="en" />
 
     <section class="selected-work section-pad">
       <div class="section-heading">

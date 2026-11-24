@@ -1,30 +1,33 @@
 ---
 import Icon from "./Icon.astro";
 
-const pathname = Astro.url.pathname;
+const { lang = "en" } = Astro.props;
+const ro = lang === "ro";
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 const beginsOnImage = pathname === "/" || pathname.startsWith("/projects/");
 const navigation = [
-  { href: "/work", label: "Work", index: "01" },
+  { href: "/work", label: ro ? "Proiecte" : "Work", index: "01" },
   { href: "/studio", label: "Studio", index: "02" },
-  { href: "/services", label: "Services", index: "03" },
+  { href: ro ? "/ro/servicii" : "/services", label: ro ? "Servicii" : "Services", index: "03" },
   { href: "/contact", label: "Contact", index: "04" },
+  ...(!ro ? [{ href: "/ro/servicii", label: "RO", index: "05" }] : []),
 ];
 ---
 
 <header class:list={["site-header", beginsOnImage ? "site-header--inverse" : "site-header--solid"]} data-site-header data-begins-on-image={beginsOnImage ? "true" : "false"}>
-  <a href="/" class="brand-mark" aria-label="Sector 0 Studio home">
+  <a href="/" class="brand-mark" aria-label={ro ? "Sector 0 Studio — pagina principală" : "Sector 0 Studio home"}>
     <span class="brand-mark__slash">/</span><span>S</span><span class="brand-mark__zero">0</span>
   </a>
   <p class="site-header__discipline">Architecture + Interior Design</p>
-  <nav class="site-nav" aria-label="Primary navigation">
+  <nav class="site-nav" aria-label={ro ? "Navigare principală" : "Primary navigation"}>
     {navigation.map((item) => <a href={item.href} class:list={[pathname === item.href && "is-active"]}>{item.label}</a>)}
   </nav>
-  <button type="button" class="menu-trigger" data-menu-open aria-label="Open navigation" aria-expanded="false"><Icon name="menu" /></button>
+  <button type="button" class="menu-trigger" data-menu-open aria-label={ro ? "Deschide meniul" : "Open navigation"} aria-expanded="false"><Icon name="menu" /></button>
 </header>
 
 <div class="site-menu__backdrop" data-menu-backdrop></div>
-<aside class="site-menu" data-site-menu aria-hidden="true" aria-label="Mobile navigation">
-  <button type="button" class="site-menu__close" data-menu-close aria-label="Close navigation"><Icon name="close" /></button>
+<aside class="site-menu" data-site-menu aria-hidden="true" aria-label={ro ? "Navigare pe mobil" : "Mobile navigation"}>
+  <button type="button" class="site-menu__close" data-menu-close aria-label={ro ? "Închide meniul" : "Close navigation"}><Icon name="close" /></button>
   <div class="site-menu__topline"><span>Sector 0 Studio</span><span>Bucharest · Europe</span></div>
   <nav class="site-menu__nav">
     {navigation.map((item) => <a href={item.href}><span>{item.index}</span>{item.label}</a>)}
